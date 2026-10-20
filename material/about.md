@@ -8,6 +8,8 @@ This course runs in parallel with the **Neural Networks** course. While the Neur
 
 Over eight weeks, you will work in a team to design, build, test, and present a **functional AI assistant or AI agent** that addresses a real-world problem of your choosing.
 
+> An AI assistant primarily helps a user with a task. An AI agent can also decide which actions to take, use tools, observe the results, and continue toward a goal. However, they are not mutually exclusive. An AI assistant can be implemented as an agent, and many products described as agents are really assistants with tool-calling capabilities.
+
 Your goal to build an application that can understand requests, use information, interact with tools and external services, and perform meaningful actions.
 
 The central question is:

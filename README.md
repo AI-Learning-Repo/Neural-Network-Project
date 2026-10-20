@@ -9,14 +9,14 @@
 
 ## Sessions
 
-- [Week 1: Lecture notes and activities] - LangChain; tool calling
-- [Week 2: Lecture notes and activities] - LangChain; External APIs
-- [Week 3: Lecture notes and activities] - MCP clients with LangChain
-- [Week 4: Lecture notes and activities] - MCP servers with LangChain
-- [Week 5: Lecture notes and activities] - RAG with LangChain
+- [Week 1: Lecture notes and activities] - LangChain; tool calling, **Project brainstorming**
+- [Week 2: Lecture notes and activities] - LangChain; External APIs, **Coding Marathon 1**
+- [Week 3: Lecture notes and activities] - MCP clients with LangChain, **Sprint 1 Presentation** 
+- [Week 4: Lecture notes and activities] - MCP servers with LangChain, **Coding Marathon 2**
+- [Week 5: Lecture notes and activities] - RAG with LangChain, **Sprint 2 Presentation**
 - [Week 6: Lecture notes and activities] - Multi-agent systems with LangChain/LangGraph
-- [Week 7: Lecture notes and activities] - Fine-tuning; Security
-- [Week 8: Lecture notes and activities] - Examination
+- [Week 7: Lecture notes and activities] - Fine-tuning; Security, **Coding Marathon 3**
+- [Week 8: Lecture notes and activities] - **Sprint 3 Presentation**, Examination
 
 
 <!--  https://opinto-opas.metropolia.fi/realization/128643?lang=en -->

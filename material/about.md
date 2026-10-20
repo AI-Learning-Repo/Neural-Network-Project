@@ -118,7 +118,7 @@ These sessions are opportunities to practise implementation, experimentation, de
 
 ## Course Mechanics and Teamwork
 
-You will manage your project using **Scrum and GitHub**. This includes Product and Sprint Backlogs, Sprint Goals, user stories, source code, reviews, tests, and documentation.
+You will manage your project using **Scrum**. This includes Product and Sprint Backlogs, Sprint Goals, user stories, source code, reviews, tests, and documentation.
 
 The project should develop through several increasingly capable versions. Teams should divide work fairly, integrate their contributions regularly, and be prepared to explain both team-level decisions and individual work.
 
@@ -134,7 +134,8 @@ Depending on your project, you may use Streamlit, external APIs, retrieval syste
 
 Interested teams may investigate additional tools and approaches, including:
 
-- [Google Colab integration with VS Code](https://github.com/googlecolab/colab-vscode) or the [Colab CLI](https://github.com/googlecolab/google-colab-cli)
+- [Google Colab integration with VS Code](https://github.com/googlecolab/colab-vscode) 
+- [Colab CLI](https://github.com/googlecolab/google-colab-cli)
 - Alternative Qwen models and quantization techniques
 - [Experimental model compression for larger models](https://timdettmers.com/2026/09/21/dlab-open-source-week/)
 - LangGraph for more explicit agent and multi-agent orchestration
@@ -165,7 +166,7 @@ Assessment combines working project increments, practical coding skills, teamwor
 | Coding Marathon 1 | 10% |
 | Coding Marathon 2 | 10% |
 | Coding Marathon 3 | 15% |
-| University Course Feedback | 7% |
+| Course Feedback | 7% |
 | Project Exam | 23% |
 | **Total** | **100%** |
 
@@ -191,7 +192,7 @@ However:
 
 - **Understand your code:** You should be able to explain, modify, and debug the implementation you submit.
 - **Verify results:** Review, run, test, and evaluate AI-generated suggestions; do not assume they are correct.
-- **Learn actively:** Use AI to explore ideas, understand unfamiliar tools, and compare alternatives—not as a substitute for your own understanding.
+- **Learn actively:** Use AI to explore ideas, understand unfamiliar tools, and compare alternatives, not as a substitute for your own understanding.
 - **Take responsibility:** Be able to explain architectural choices and your individual contributions to the project.
 - **Build responsibly:** Consider privacy, security, bias, copyright, safety, and ethical implications when working with data, models, and external services.
 

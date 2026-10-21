@@ -10,7 +10,7 @@ Over eight weeks, you will work in a team to design, build, test, and present a 
 
 > An AI assistant primarily helps a user with a task. An AI agent can also decide which actions to take, use tools, observe the results, and continue toward a goal. However, they are not mutually exclusive. An AI assistant can be implemented as an agent, and many products described as agents are really assistants with tool-calling capabilities.
 
-Your goal to build an application that can understand requests, use information, interact with tools and external services, and perform meaningful actions.
+Your goal is to build an application that can understand requests, use information, interact with tools and external services, and perform meaningful actions.
 
 The central question is:
 
@@ -114,7 +114,7 @@ Three coding marathons take place in **Weeks 2, 4, and 7**. You will work in pai
 
 - **Coding Marathon 1:** LangChain, tool calling, and external APIs.
 - **Coding Marathon 2:** MCP client/server integration.
-- **Coding Marathon 3:** RAG and multi-agent workflows.
+- **Coding Marathon 3:** tools, MCP, RAG, and multi-agent workflows.
 
 These sessions are opportunities to practise implementation, experimentation, debugging, and collaboration while producing working solutions.
 

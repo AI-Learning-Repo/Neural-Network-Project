@@ -9,7 +9,7 @@
 ## Sessions
 
 - [Week 1: Lecture notes and activities] - LangChain; tool calling, **Project brainstorming**
-- [Week 2: Lecture notes and activities] - ; External APIs, **Coding Marathon 1**
+- [Week 2: Lecture notes and activities] - External APIs, **Coding Marathon 1**
 - [Week 3: Lecture notes and activities] - MCP clients with LangChain, **Sprint 1** 
 - [Week 4: Lecture notes and activities] - MCP servers with LangChain, **Coding Marathon 2**
 - [Week 5: Lecture notes and activities] - RAG with LangChain, **Sprint 2**

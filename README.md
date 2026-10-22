@@ -2,12 +2,12 @@
 
 ### Morning: 
 
+<!-- - [Class demonstration](./material/w1demo.ipynb) -->
 
 - Course introduction; 
 - LangChain & Tool calling.
-  - [Lecture companion](./material/lecture01_agent_intro_companion.md)
-  - [Class demonstration](./material/w1demo.ipynb)
   - [Theory](./material/agent_tool_calling_theory.md)
+  - [Lecture companion](./material/lecture01_agent_intro_companion.md)  
 - Activity 
   - [Block Diagrams](./material/w1activity_diagrams.md)
   - [Part 1](./material/w1activity1.md)
@@ -17,6 +17,7 @@
 ### Afternoon:
 
 - Activity ...
+  - [Using the Groq API in Google Colab](./material/Groq_in_colab.ipynb)
   - [Part 2](./material/w1activity2.md)
 - Project brainstorming and **Sprint 1 planning**.
   - [Project overview,](./material/ai_project_overview.md)

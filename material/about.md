@@ -1,8 +1,5 @@
-# Neural Network Project: 5 ECTS
+# Neural Network Project:
 
-## Welcome
-
-Welcome to the **Neural Network Project** course!
 
 This course runs in parallel with the **Neural Networks** course. While the Neural Networks course focuses on understanding, training, and evaluating neural networks, this project course focuses on **engineering neural-network-based systems into useful AI products**.
 

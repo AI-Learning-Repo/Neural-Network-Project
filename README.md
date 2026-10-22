@@ -4,10 +4,10 @@
 
 
 - Course introduction; 
-- LangChain; tool calling.
+- LangChain & Tool calling.
   - [Lecture companion](./material/lecture01_agent_intro_companion.md)
   - [Class demonstration](./material/w1demo.ipynb)
-- [Theory](./material/agent_tool_calling_theory.md)
+  - [Theory](./material/agent_tool_calling_theory.md)
 - Activity 
   - [Block Diagrams](./material/w1activity_diagrams.md)
   - [Part 1](./material/w1activity1.md)

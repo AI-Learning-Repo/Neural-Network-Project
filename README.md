@@ -5,6 +5,8 @@
 - [About the Project Course](./material/about.md)
 - [Grading](./material/grading.md)
 - [Resources](./material/resources.md)
+- [Zoom Recordings](https://metropoliafi-my.sharepoint.com/:f:/g/personal/samiben_metropolia_fi/IgC8l5OvAea7RJeoVw_KTEpHAZPrQpIyzgFa7iB9c1s9tfc)
+
 
 ## Sessions
 

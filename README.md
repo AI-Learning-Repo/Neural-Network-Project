@@ -14,8 +14,8 @@
 
 - [Summary: From API Calls to LLM Tools](./material/summary.md)
 - Activity:
-  - [Part A: Steps 1–4](./material/activity.md#part-a)
-  - [Part B: Optional Step 5](./material/activity.md#part-b)
+  - [Part A: Steps 1–4](./material/activity.md)
+  - [Part B: Optional Step 5](./material/activity.md#part-b-step-5-optional)
 
 ---
 

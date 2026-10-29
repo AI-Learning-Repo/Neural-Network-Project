@@ -28,12 +28,15 @@
   - [Complete Explanation and Answers](./material/code-marathon1-complete-explanation.md)
   - [Optional: Section 9: Extensions](./material/code-marathon1.md#9--optional-extensions-outside-the-required-marathon)
 - Project resources:
+  - [Sprint 1 Template](./material/template.md)
+  - [Project Ideas](./material/project-ideas.md)
+
 
 <!-- 
   - [Project Ideas (Optional)](./material/01_Project_Ideas_and_Technology_Map.md)
   - [Project Brief and Use Cases](./material/02_Project_Brief_and_Requirements.md)
   - [Sprint Deliverables](./material/03_Sprint_Deliverables.md)
-  - Sprint 1 Presentation Template
+
   - Streamlit Refresher: Basic Concepts 
 
 -->

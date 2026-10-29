@@ -2,20 +2,21 @@
 
 
 
-> [!NOTE]  
-> - [Homework](./material/homework.md) for next Week.
-> - Sprint 1 will be online (All Day)
-> - Sprints 2 and 3 will be on campus (All Day)
-
-
-----
-
 ## Morning
 
 - [Summary: From API Calls to LLM Tools](./material/summary.md)
 - Activity:
   - [Part A: Steps 1–4](./material/activity.md)
   - [Part B: Optional Step 5](./material/activity1-steps-5.md)
+
+----
+
+> [!NOTE]  
+> - [Homework](./material/homework.md) for next Week: Understanding a Groq Tool-Calling Agent with LangChain Tools
+> - [Archiving and Downloading Project Files from Google Colab](./material/Colab.md)
+> - Sprint 1 will be online (All Day)
+> - Sprints 2 and 3 will be on campus (All Day)
+
 
 ---
 

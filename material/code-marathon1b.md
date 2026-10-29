@@ -1,10 +1,4 @@
-Here is the complete, cleaned, and professionally formatted **student-facing lab handout**. 
-
-It is completely standalone, maintains a neutral academic tone, removes internal meta-instructions, preserves all technical TODOs, code blocks, testing criteria, evaluation tables, and deliverables, and incorporates the standalone project exporter at the end so students can download their work cleanly.
-
----
-
-# Lab Assignment: Weather and Trip Planner Agent
+# Code Marathon: Weather and Trip Planner
 
 ```mermaid
 flowchart LR

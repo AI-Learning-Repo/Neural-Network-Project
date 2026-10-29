@@ -7,9 +7,9 @@
 
 **Theme:** Device monitoring, room comfort, and energy awareness.
 
-**Example Interaction:** *“The living room is cold. Check the temperature, compare it with my preferred setting, and prepare a suitable thermostat adjustment.”*
+**Example Interaction:** *"The living room is cold. Check the temperature, compare it with my preferred setting, and prepare a suitable thermostat adjustment."*
 
-**From Assistant to Agentic Workflow:** The assistant reads and explains sensor measurements. The agent identifies the target device, inspects states and preferences, prepares a change, validates constraints, and requests confirmation before performing any action.
+****Assistant Workflow****: The assistant reads and explains sensor measurements, identifies the target device, checks device states and user preferences, prepares suitable adjustments, validates constraints, and requests confirmation before performing any action.
 
 **Tools:** `list_devices`, `get_temperature`, `get_device_state`, `get_room_preferences`, `get_energy_usage`, `set_thermostat`, `log_action`.
 
@@ -17,7 +17,7 @@
 
 **API / Integration:** A mock smart-home REST service or the [Home Assistant REST API](https://developers.home-assistant.io/docs/api/rest/). Simulated readings are sufficient; no real home hardware is required.
 
-- **Sprint 1 (Notebook):** Implement a notebook workflow querying SQLite for device metadata and your API for live/simulated temperatures. Demonstrate *“check a room, compare values against preferences, and propose an adjustment”* in **both Groq and local Colab modes**. Display tool execution traces; do not automatically alter device state.
+- **Sprint 1 (Notebook):** Implement a notebook workflow querying SQLite for device metadata and your API for live/simulated temperatures. Demonstrate *"check a room, compare values against preferences, and propose an adjustment"* in **both Groq and local Colab modes**. Display tool execution traces; do not automatically alter device state.
 - **Sprint 2 (Streamlit & MCP/RAG):** Build an interactive Streamlit dashboard and chat UI. Expose device tools via MCP. Add RAG over thermostat user manuals, hardware troubleshooting guides, and energy-use policies. Answer queries combining live device data with retrieved manual instructions.
 - **Sprint 3 (Agents & Fine-Tuning):** Introduce distinct monitoring, planning, and validation agent roles. Test disconnected sensors, stale readings, unknown devices, and safety limits. Fine-tune a classification model for user intent (*monitor*, *explain*, or *control*).
 
@@ -29,9 +29,9 @@
 
 **Theme:** Academic course discovery, eligibility checking, and timetable planning.
 
-**Example Interaction:** *“Find eligible AI courses with available seats and no timetable conflicts.”*
+**Example Interaction:** *"Find eligible AI courses with available seats and no timetable conflicts."*
 
-**From Assistant to Agentic Workflow:** The assistant searches course descriptions. The agent checks student history, prerequisites, seat limits, and timetable clashes to assemble a feasible schedule draft.
+****Assistant Workflow****: The assistant searches course descriptions, checks student history, verifies prerequisites and seat availability, identifies timetable conflicts, and prepares a feasible course registration plan.
 
 **Tools:** `search_courses`, `get_course_details`, `check_prerequisites`, `check_available_seats`, `check_schedule_conflicts`, `prepare_registration`.
 
@@ -51,9 +51,9 @@
 
 **Theme:** Stock management, supplier comparisons, and purchase-order drafting.
 
-**Example Interaction:** *“Find products below the reorder threshold and prepare a supplier order.”*
+**Example Interaction:** *"Find products below the reorder threshold and prepare a supplier order."*
 
-**From Assistant to Agentic Workflow:** The assistant lists stock counts. The agent calculates reorder quantities deterministically, compares supplier pricing, applies purchasing rules, and drafts an order.
+**Assistant Workflow**: The assistant monitors stock levels, identifies products requiring replenishment, calculates reorder quantities, compares supplier pricing, verifies purchasing rules, and prepares purchase order drafts.
 
 **Tools:** `check_stock`, `get_stock_movements`, `calculate_reorder`, `find_supplier`, `compare_supplier_prices`, `draft_purchase_order`.
 
@@ -73,9 +73,9 @@
 
 **Theme:** Codebase inspection, failed-test diagnosis, and controlled patch generation.
 
-**Example Interaction:** *“Explain this failed test and propose a patch that can be retested.”*
+**Example Interaction:** *"Explain this failed test and propose a patch that can be retested."*
 
-**From Assistant to Agentic Workflow:** The assistant explains a stack trace. The agent inspects files, retrieves test logs, drafts a targeted patch, applies it inside an isolated sandbox, runs tests, and reviews the outcome.
+**Assistant Workflow**: The assistant investigates code errors, inspects relevant files and test logs, identifies possible causes, proposes targeted patches, tests changes in an isolated environment, and evaluates the results.
 
 **Tools:** `list_files`, `read_file`, `search_code`, `get_test_results`, `run_tests`, `get_error_history`, `propose_patch`.
 
@@ -95,9 +95,9 @@
 
 **Theme:** Journey planning, timetable checks, and transfer/accessibility constraints.
 
-**Example Interaction:** *“Find an arrival before 09:00 with no more than one transfer.”*
+**Example Interaction:** *"Find an arrival before 09:00 with no more than one transfer."*
 
-**From Assistant to Agentic Workflow:** The assistant lists routes. The agent validates stop IDs, queries live timetables, enforces time/transfer limits, compares alternatives, and proposes the most reliable route.
+**Assistant Workflow**: The assistant searches transport routes, validates stop information, retrieves current timetables, checks departure and arrival constraints, evaluates transfer options, and recommends suitable journeys.
 
 **Tools:** `find_stop`, `get_departures`, `plan_journey`, `get_service_alerts`, `compare_journeys`, `save_journey`.
 
@@ -117,9 +117,9 @@
 
 **Theme:** Expense categorization and budget tracking using **synthetic data**.
 
-**Example Interaction:** *“Compare this month's spending against my category budgets.”*
+**Example Interaction:** *"Compare this month's spending against my category budgets."*
 
-**From Assistant to Agentic Workflow:** The assistant lists transactions. The agent categorizes items, calculates totals with Python logic, flags over-budget categories, and prepares adjustments.
+**Assistant Workflow**: The assistant retrieves and categorizes transactions, calculates spending totals, compares expenses against budgets, identifies overspending patterns, and prepares recommendations for budget adjustments.
 
 **Tools:** `get_transactions`, `categorize_expense`, `calculate_spending`, `get_budget`, `compare_budget`, `draft_budget_adjustment`.
 
@@ -139,9 +139,9 @@
 
 **Theme:** Menu search, dietary restrictions, and order drafting.
 
-**Example Interaction:** *“Prepare a vegetarian pickup order within a €20 budget.”*
+**Example Interaction:** *"Prepare a vegetarian pickup order within a €20 budget."*
 
-**From Assistant to Agentic Workflow:** The assistant looks up dishes and prices. The agent verifies ingredients, dietary labels, item availability, and budget limits, then compiles a draft order for confirmation.
+**Assistant Workflow**: The assistant searches menu items, checks ingredients and dietary requirements, verifies availability, calculates order totals, applies budget constraints, and prepares an order draft for user confirmation.
 
 **Tools:** `search_menu`, `get_ingredients`, `check_availability`, `filter_dietary_options`, `calculate_total`, `draft_order`.
 
@@ -161,9 +161,9 @@
 
 **Theme:** Technical issue diagnosis, troubleshooting, and ticket management.
 
-**Example Interaction:** *“Investigate a Wi-Fi connection issue and create a support ticket if it cannot be resolved.”*
+**Example Interaction:** *"Investigate a Wi-Fi connection issue and create a support ticket if it cannot be resolved."*
 
-**From Assistant to Agentic Workflow:** The assistant looks up knowledge base articles. The agent classifies the problem, queries known incidents, runs diagnostic checks, proposes troubleshooting steps, and drafts a ticket upon user approval.
+**Assistant Workflow**: The assistant analyzes reported technical issues, searches known solutions, checks similar incidents, performs authorized diagnostic checks, recommends troubleshooting steps, and prepares support tickets when necessary.
 
 **Tools:** `search_known_issues`, `get_device_information`, `run_diagnostic`, `find_similar_tickets`, `create_ticket`, `check_ticket_status`.
 
@@ -183,9 +183,9 @@
 
 **Theme:** Sensor telemetry, air quality tracking, and threshold alerts.
 
-**Example Interaction:** *“Compare station readings across the city and flag any values exceeding safety limits.”*
+**Example Interaction:** *"Compare station readings across the city and flag any values exceeding safety limits."*
 
-**From Assistant to Agentic Workflow:** The assistant reports current sensor values. The agent collects multi-station data, checks units and thresholds, verifies alert rules, and prepares an alert report.
+**Assistant Workflow**: The assistant retrieves environmental measurements, compares readings across monitoring locations, checks measurement units and threshold limits, identifies unusual conditions, and prepares monitoring reports and alerts.
 
 **Tools:** `list_stations`, `get_sensor_readings`, `get_air_quality`, `compare_stations`, `check_thresholds`, `create_alert`.
 

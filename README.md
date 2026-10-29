@@ -12,7 +12,7 @@
 ----
 
 > [!NOTE]  
-> - [Homework](./material/homework.md) for next Week: Understanding a Groq Tool-Calling Agent with LangChain Tools
+> - Homework for next Week: [Understanding a Groq Tool-Calling Agent with LangChain Tools](./material/homework.md)
 > - [Archiving and Downloading Project Files from Google Colab](./material/Colab.md)
 > - Sprint 1 will be online (All Day)
 > - Sprints 2 and 3 will be on campus (All Day)

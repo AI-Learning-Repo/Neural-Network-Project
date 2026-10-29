@@ -60,7 +60,7 @@ A **JSON object** can be converted into a Python dictionary. The program can the
 
 ## 2. A Python function makes an API call reusable
 
-In Step 1 of the activity, Python executes individual requests. In Step 2, each request is placed inside a function with meaningful inputs and a predictable returned structure.
+In **Step 1** of the activity, Python executes individual requests. In **Step 2**, each request is placed inside a function with meaningful inputs and a predictable returned structure.
 
 Examples from the activity:
 
@@ -85,7 +85,7 @@ A **tool** is a callable operation presented through a consistent interface. In 
 3. **Input schema:** Defines accepted argument names and types.
 4. **Execution method:** Allows the operation to be called from Python, for example with `.invoke()`.
 
-The Step 3 wrapper follows this pattern:
+The **Step 3** wrapper follows this pattern:
 
 ```python
 from langchain_core.tools import tool
@@ -162,7 +162,7 @@ This is a **possible tool sequence**, not a guarantee that every model will sele
 
 ## 5. Step 4: Tool calling with Groq-hosted Qwen
 
-**Groq** is the hosted inference service used in Step 4. **Qwen** is the language-model family used through that service. Groq and Qwen are not interchangeable names.
+**Groq** is the hosted inference service used in **Step 4**. **Qwen** is the language-model family used through that service. Groq and Qwen are not interchangeable names.
 
 **Part 4A** verifies the remote model connection: load `GROQ_API_KEY` from Colab Secrets, select an available model, send a simple prompt, and inspect its response. **No tools** are required for this first test.
 
@@ -189,13 +189,13 @@ flowchart LR
     result --> groq
 ```
 
-An API key is required to authenticate the **Groq model request**. The key is not an argument to the Geocoding, Weather, or Time functions. The Step 4 model is hosted remotely, so Colab does not need to download the model or enable a GPU.
+An API key is required to authenticate the **Groq model request**. The key is not an argument to the Geocoding, Weather, or Time functions. The **Step 4** model is hosted remotely, so Colab does not need to download the model or enable a GPU.
 
 **Important:** A model-generated tool-call request is an instruction for the application, not proof of execution. The execution trace must contain the actual tool call and the result returned by the API.
 
 ## 6. Step 5: Tool calling with local Qwen3.5-4B
 
-In Step 5, Qwen3.5-4B runs in the Colab runtime instead of on Groq's servers. The supplied loading activity uses **4-bit quantization** to reduce model memory requirements; a suitable GPU is still needed.
+In **Step 5**, Qwen3.5-4B runs in the Colab runtime instead of on Groq's servers. The supplied loading activity uses **4-bit quantization** to reduce model memory requirements; a suitable GPU is still needed.
 
 - **Part 5A:** Change to a GPU runtime, rebuild temporary files after the session change, install dependencies, load the local model, and test basic text generation before involving tools.
 - **Part 5B:** Present the same LangChain tool definitions to the local model, interpret generated tool requests, execute the approved tools, and return the results to Qwen.

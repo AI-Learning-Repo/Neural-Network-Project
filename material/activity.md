@@ -2,7 +2,7 @@
 
 Build API-powered tools for weather and local time, then let a language model request those tools. Python executes the requests; evaluate the final answers against the returned data.
 
-Start with the [activity overview](activity1-step_0.md). Read the companion [theory chapter](theory.md) alongside the practical steps.
+Start with the [activity overview](activity1-step_0.md). Read the companion [theory chapter](./summary.md) alongside the practical steps.
 
 ## Part A: Steps 1–4
 
@@ -25,4 +25,6 @@ Part B is an **optional extension to this activity**. Its exercises, evaluation,
 
 Use a **Google Colab GPU runtime** for Part B. Save Part A before switching runtimes, then restore the required packages and source files. Do not rerun Groq requests merely to recreate files. The local model does not require a Groq API key.
 
-**Course-project distinction:** Step 5 is optional in this activity. The course project's required local-versus-Groq model benchmark remains a separate requirement; see the [sprint deliverables](./03_Sprint_Deliverables.md).
+**Course-project distinction:** Step 5 is optional in this activity. The course project's required local-versus-Groq model benchmark remains a separate requirement.
+
+<!-- ; see the [sprint deliverables](./03_Sprint_Deliverables.md). -->

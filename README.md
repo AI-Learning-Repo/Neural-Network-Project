@@ -24,6 +24,7 @@
 
 - Code marathon:
   - [Required: Sections 1–8](./material/code-marathon1.md)
+  - [Complete Explanation and Answers](./material/code-marathon1-complete-explanation.md)
   - [Optional: Section 9: Extensions](./material/code-marathon1.md#9--optional-extensions-outside-the-required-marathon)
 - Project resources:
 

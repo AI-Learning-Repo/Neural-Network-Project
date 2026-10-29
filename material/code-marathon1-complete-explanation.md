@@ -98,12 +98,12 @@ The suggested schedule totals three hours:
 
 | Stage | Time | Expected result |
 |---|---:|---|
-| Database | 20 min | Database created and inspected |
-| Database/API functions | 40 min | Both functions tested |
-| LangChain tools | 25 min | Both `.invoke()` tests pass |
-| Groq integration | 45 min | Working model/tool conversation |
-| Evaluation | 35 min | Test cases and answers |
-| Demonstration | 15 min | Working demonstration |
+| Database |  | Database created and inspected |
+| Database/API functions |  | Both functions tested |
+| LangChain tools |  | Both `.invoke()` tests pass |
+| Groq integration |  | Working model/tool conversation |
+| Evaluation |  | Test cases and answers |
+| Demonstration |  | Working demonstration |
 
 The important point is that the database and weather code are tested separately **before connecting them to the LLM**. This makes errors easier to identify.
 

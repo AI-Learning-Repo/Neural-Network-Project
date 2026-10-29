@@ -56,7 +56,7 @@
 
 ----
 
-<details open>
+<details>
 <summary>Links used in Session</summary>
 
 - https://github.com/googlecolab/google-colab-cli

@@ -1,8 +1,6 @@
 # Document B: Sprint 1 Review Presentation Template
 
 
-**Presentation:** approximately **10–12 minutes** per presenter, followed by technical questions within an approximately **15-minute table slot**.
-
 ## 1. Purpose
 
 Your presentation should tell the story of **what your team planned, built, tested, and learned during Sprint 1**. The focus is on a real working increment and evidence of its behavior, not on listing technologies or describing features that may be implemented later.

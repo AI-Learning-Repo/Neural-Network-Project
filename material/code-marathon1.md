@@ -608,7 +608,7 @@ stockholm_trace = run_marathon_agent(
     "day within the next seven days with low rain probability and light wind."
 )
 
-print("Answer:", stockholm_trace["answer"])
+#print("Answer:", stockholm_trace["answer"])
 print("Tools used:", [
     call["name"]
     for turn in stockholm_trace["turns"]

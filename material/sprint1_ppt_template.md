@@ -110,28 +110,20 @@ Describe the process **as it happened**, including adaptations or events that di
 
 Show a **simple architecture diagram of the implementation that exists**, not an idealized future design. A possible starting structure is:
 
-```text
-User
-  |
-  v
-Interaction (CLI / notebook / simple UI)
-  |
-  v
-Qwen assistant (Colab and Groq)
-  |
-  v
-Application-controlled tool calls
-  |------------------|
-  v                  v
-Database tools     External API tools
-  |                  |
-  |------results-----|
-           |
-           v
-     Assistant response
-           |
-           v
-          User
+
+```mermaid
+graph TD
+    UserStart["User"] --> UI["Interaction<br/>(CLI / notebook / simple UI)"]
+    UI --> LLM["Qwen assistant<br/>(Colab and Groq)"]
+    LLM --> Tools["Application-controlled tool calls"]
+    
+    Tools --> DB["Database tools"]
+    Tools --> API["External API tools"]
+    
+    DB -->|results| Resp["Assistant response"]
+    API -->|results| Resp
+    
+    Resp --> UserEnd["User"]
 ```
 
 **Explain**

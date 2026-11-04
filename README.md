@@ -1,5 +1,7 @@
 # Schedule
 
+
+
 ## Morning: Model Context Protocol (MCP)
 
 **Topic:** Understanding MCP Clients: Why a Common Tool Protocol Matters
@@ -48,7 +50,7 @@ Each group should:
 - Assign responsibilities and identify important risks and dependencies.
 - Plan the next working increment, including MCP client/server integration, Streamlit GUI, and function unit tests.
 
-**Reminder:** Sprint 2 builds on Sprint 1. Existing functionality should be preserved and improved, not replaced by separate MCP exercises. The Sprint 2 Review will take place in the afternoon of Week 5.
+**Reminder:** Sprint 2 builds on Sprint 1. Existing functionality should be preserved and improved. The Sprint 2 Review will take place in the afternoon of Week 5.
 
 ----
 

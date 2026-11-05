@@ -22,29 +22,21 @@
 
 ## Afternoon: Sprint 1 Review & Sprint 2 Planning
 
-### 1. **Mock Zoom Poll**
 
-### 2. Sprint 1 Presentations: Jigsaw Challenge
+> [!IMPORTANT]  
+> **Before entering the Jigsaw breakout rooms:**
+>   - **Identify the group number** of every student in your breakout room.
+>   - **Best Presentation:** Vote for **one group** from your room, excluding your own group.
+>   - **Best Concept Connectors:** Select **two groups** from your room, excluding your own group.
+>   - **Important:** Vote only for groups represented in your breakout room. Please remember their group numbers to avoid voting mistakes.
 
-**Read the following instructions before starting:**
 
-- [Sprint 1: Jigsaw Breakout-Room Instructions](./material/sprint1_br_instructions.md)
-- [Jigsaw Voting Guide](./material/sprint1_voting_guide.md)
-- [Jigsaw Scoring](./material/sprint1_scoring.md)
-
-**Jigsaw activities:**
-
-1. **Breakout-room presentations:** Four participants from different project groups present their Sprint 1 work, demonstrate their AI assistants, and answer technical questions.
-2. **Collaborative learning task:** Each room identifies:
-   - One interesting tool integration.
-   - One lesson about evaluating AI assistants.
-   - One technical limitation or failure.
-   - One improvement worth adopting.
-3. **Return to the main room:** After completing the presentations and collaborative task, everyone returns to the main Zoom room.
-4. **Zoom Poll:**  Please vote for the Best Presentation and the two strongest Concept Connectors from their Jigsaw room.
-5. **Results and showcase:** Group scores are normalized, and the top one or two groups may be invited to present to the whole class, depending on the available time.
-
-### 3. Sprint 2 Planning
+- Mock Zoom Poll
+-  Sprint 1 Presentations: Jigsaw Challenge
+  - [Sprint 1: Jigsaw Breakout-Room Instructions](./material/sprint1_br_instructions.md)
+  - [Jigsaw Voting Guide](./material/sprint1_voting_guide.md)
+   [Jigsaw Scoring](./material/sprint1_scoring.md)
+- Sprint 2 Planning
 
 After the Jigsaw Challenge, we return to  **original breakout rooms** to begin Sprint 2 planning.
 
@@ -61,6 +53,21 @@ Each group should:
 
 **Reminder:** Sprint 2 builds on Sprint 1. Existing functionality should be preserved and improved. The Sprint 2 Review will take place in the afternoon of Week 5.
 
+
+
+<!-- 
+**Jigsaw activities:**
+
+1. **Breakout-room presentations:** Four participants from different project groups present their Sprint 1 work, demonstrate their AI assistants, and answer technical questions.
+2. **Collaborative learning task:** Each room identifies:
+   - One interesting tool integration.
+   - One lesson about evaluating AI assistants.
+   - One technical limitation or failure.
+   - One improvement worth adopting.
+3. **Return to the main room:** After completing the presentations and collaborative task, everyone returns to the main Zoom room.
+4. **Zoom Poll:**  Please vote for the Best Presentation and the two strongest Concept Connectors from their Jigsaw room.
+5. **Results and showcase:** Group scores are normalized, and the top one or two groups may be invited to present to the whole class, depending on the available time. 
+-->
 ----
 
 <!-- <details open> -->

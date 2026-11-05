@@ -1,116 +1,66 @@
-# Activity 1: Understanding MCP Clients: Why a Common Tool Protocol Matters
+# Activity 1: MCP Clients over HTTP and stdio
 
+## Learning objectives
 
-## Learning objective
+Connect a Colab application to existing MCP servers, discover capabilities, invoke tools, read resources, and retrieve prompts. Compare HTTP endpoints with local subprocesses, reuse one client workflow across providers, and explain protocol compatibility separately from transport choice.
 
-Connect an application to two independently developed MCP servers, discover and invoke tools, inspect results and errors, and explain how a common client interface reduces server-specific integration code. Use a supplied third server to discover and read a resource and retrieve a prompt template.
+**Starting knowledge:** Basic Python functions, dictionaries, JSON, and HTTP requests. Use a Google Colab CPU runtime with Python 3.11 or later and internet access. No LLM, LangChain, GPU, or model API key is required by the supplied examples. Public services can change their access requirements or availability.
 
-### Starting knowledge
+All setup, required client code, and the supplied local resource/prompt server are included here. Copy each required Python block into its own Colab cell and run in order. `%pip` and `%%writefile` are notebook syntax; top-level `await` and `async with` are supported in Colab. The Step 9 server preview is optional and is not an execution cell.
 
-Basic Python function calls, dictionaries, HTTP requests, and JSON are sufficient. Code cells are intended for a **Google Colab notebook** and should be executed in order. The `%pip` command and top-level `async with` blocks are notebook syntax, not code for direct execution in a standard `.py` file.
+Attempt the questions before opening the answers. Retain actual versions, returned data, and errors. Changing timestamps and webpage content are observations, not fixed expected answers. Mermaid diagrams require a compatible viewer; the surrounding descriptions explain the same interactions.
 
-By the end of this activity, the following distinctions should be clear:
+## 0. Motivation and the route through the activity
 
-1. **Server implementation:** The MCP server implements a capability, such as converting time or fetching web content.
-2. **Client communication:** The MCP client connects to a server, discovers its available operations, and requests their execution.
-3. **Tool schema:** The server advertises a tool name, description, and accepted input structure before the tool is called.
-4. **Tool invocation:** A client sends a tool name and arguments; the server performs the operation and returns its outcome.
-5. **Interoperability:** The same client operations work with unrelated servers, although their tool names, schemas, permissions, and results differ.
+A trip planner needs time-zone information and public information about destinations. Separate API wrappers can provide these capabilities, but each wrapper follows its provider's conventions. MCP supplies common discovery and request operations while providers retain their own implementations.
 
-This demonstration uses **no LLM and no LangChain**. Python chooses each requested tool explicitly. MCP provides a protocol for connecting an application to capabilities; it does not itself decide which tool should be chosen for a natural-language question.
+The **host** is the Colab application coordinating requests. An **MCP client** handles protocol communication with one provider. An **MCP server** advertises and implements capabilities. Python explicitly chooses each request in this activity; MCP does not choose a tool automatically.
 
-<details>
-<summary>Study guidance</summary>
+| Step | Main question |
+|---|---|
+| 1 | What must the Colab client install and import? |
+| 2 | How does a client use a remote MCP server over HTTP? |
+| 3 | What changes when the client launches a local server over stdio? |
+| 4 | How can one host coordinate multiple servers and transports? |
+| 5 | How does protocol compatibility work? |
+| 6 | What does MCP add to direct API integration? |
+| 7 | How are request, tool, and connection failures distinguished? |
+| 8 | How are resources and prompts used with a supplied local server? |
+| 9 | What server implementation sits behind the client interface? |
+| 10 | What security checks and completion evidence are needed? |
 
-All required setup, client code, and demonstration server code are included in this activity. No separate notebook, lecture, or activity is required. Create a Colab notebook, copy each required Python block into its own cell, and run the cells in order. The Step 10 server preview is optional and must not be executed with the minimal setup.
-
-A language model (LLM) generates responses from supplied context. LangChain is a framework that can organize model and tool interactions. Neither is needed for the explicit Python requests used here. A CPU runtime and internet access are sufficient; no GPU or model API key is required.
-
-Attempt each question before opening its answer. Worked answers explain expected concepts; record actual outputs for timestamps, fetched content, versions, and errors. Mermaid diagrams require a compatible Markdown viewer; the accompanying prose explains the same workflows.
-
-</details>
-
----
-
-## 0. Why MCP? A trip-planning example
-
-Consider a trip-planning application with two small requirements:
-
-- Retrieve the local time in Helsinki, Tokyo, or another city.
-- Read public information from a website, such as a destination guide or an informational page.
-
-Without MCP, a developer might research each service's API, write an HTTP request or install a particular library, parse that provider's response, and maintain a separate wrapper. Those implementations can work well, but each integration has its own conventions and may need to be updated when the provider changes its API.
-
-With MCP, an application can connect to independently developed servers that **advertise their operations through a common protocol**. The client asks each server which tools it offers, receives machine-readable schemas, and uses the same request method to call different tools. The time calculation and web retrieval are still implemented elsewhere; MCP does not eliminate their implementation or their operational requirements.
-
-### Two existing servers
-
-| MCP server | Example capability | Tools used in this activity | Needs an external API key? |
-|---|---|---|---|
-| [Time MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/time) | Local time and timezone conversion | `get_current_time`, `convert_time` | No |
-| [Fetch MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch) | Retrieve a permitted public webpage and extract readable content | `fetch` | No |
-
-An **IANA timezone** is a regional name such as `Europe/Helsinki` or `Asia/Tokyo`. Unlike a fixed UTC offset, it represents a region whose offset can change with daylight-saving rules.
+Protocol compatibility is established when a connection opens, before normal discovery and use. Its detailed explanation appears in Step 5 as a teaching sequence, not as a later runtime operation.
 
 ```mermaid
 flowchart LR
-    subgraph App["Colab application"]
-        p["Python selects a request"]
-        c["MCP client"]
-        r["Python examines the result"]
-        p --> c
-        c --> r
-    end
-    subgraph Servers["Independent local server processes"]
-        t["Time MCP server"]
-        f["Fetch MCP server"]
-    end
-    c -->|"MCP over stdio"| t
-    t -->|"Result"| c
-    c -->|"MCP over stdio"| f
-    f -->|"Result"| c
-    f -->|"HTTPS request"| w["Public website"]
-    w -->|"Web content"| f
-    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b;
-    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
-    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b;
-    class p,w input;
-    class c,t,f process;
-    class r output;
+    host["Colab host application"] --> client["MCP client interface"]
+    client <-->|"Streamable HTTP"| remote["Running remote MCP server"]
+    client <-->|"stdio"| local["Local MCP subprocess"]
+    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a
+    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b
+    class host input
+    class client process
+    class remote,local output
 ```
 
-**What the diagram shows:** The **same Python MCP client interface** communicates with either server. In this example, both servers run as local subprocesses. The Fetch server separately makes an HTTPS request to a website. An MCP connection over `stdio` is not the same thing as the Fetch server's outgoing web request.
+This diagram compares two transport arrangements. A host using both providers has a separate logical client relationship with each server, as Step 4 shows.
 
-**Key question before running code:** Which steps would be shared across the two servers, and which details must differ because the servers perform different operations?
+## Step 1: Prepare Colab and shared client helpers
 
-<details>
-<summary>Show answer: shared workflow and server-specific details</summary>
+### 1.1 Install the client dependencies
 
-Both use a configured client connection, tool discovery, a named tool call, and result inspection. The launch configuration, available tools, input schemas, underlying implementation, and returned content differ. A common protocol standardizes communication without making the operations identical.
-
-</details>
-
----
-
-## Step 1: Prepare the Colab runtime and configure both servers
-
-**Goal:** Install the client SDK and define how two existing MCP servers will be started. Installation and configuration do not, by themselves, execute a tool.
-
-### 1.1 Install dependencies
-
-Select a **CPU** runtime. Run this cell:
+Run in a fresh CPU notebook:
 
 ```python
 %pip -q install -U "mcp>=2,<3" uv
 ```
 
-The `mcp` package supplies the Python MCP SDK. `uv` supplies the `uvx` command, which launches server packages in isolated Python environments. Each server package resolves its own dependencies. The notebook does not need to install the server's code into its own Python environment.
+The `mcp` package supplies the official Python SDK v2 interfaces used here. `uv` supplies the `uvx` runner needed later for local servers. SDK v1 examples use different setup and attribute names; substituting a v1 installation will not run these cells unchanged. An SDK release number and an MCP protocol revision date identify different things.
 
-**Compatibility:** The following examples use the MCP SDK **v2** `Client` interface and snake_case result attributes. Code written for the older SDK v1 interface is not interchangeable without modification. Server packages and the notebook client can have different Python dependencies because the processes communicate through the MCP protocol.
+### 1.2 Prepare subprocess diagnostics before importing MCP
 
-### 1.2 Prepare server diagnostics before importing MCP
-
-In some Colab environments, the notebook's standard-error stream does not provide a conventional file descriptor for a subprocess. The following cell records server diagnostics in a file. Execute it **before the first `mcp` import**.
+Some notebook stderr streams do not provide the file descriptor needed by a subprocess launcher. The following cell redirects diagnostics before the first MCP import. It prepares the later stdio examples; it does not start a server.
 
 ```python
 import sys
@@ -120,53 +70,249 @@ sys.stderr = MCP_DIAGNOSTIC_LOG
 print("MCP server diagnostics will be written to mcp_server.log")
 ```
 
-This change affects how errors written to standard error are displayed. If a server fails to launch, inspect `mcp_server.log` as well as the visible notebook output. A fresh Colab runtime can restore the original streams.
+Inspect `mcp_server.log` if a local server cannot start. The redirect changes where standard-error diagnostics appear; a fresh runtime restores the original streams.
 
-### 1.3 Define the two server commands
+### 1.3 Import the client and configure HTTP endpoints
 
 ```python
 import json
 import shutil
+from contextlib import AsyncExitStack
 from importlib.metadata import version
 
 from mcp import Client, StdioServerParameters
-from mcp.types import TextContent
+from mcp.types import TextContent, TextResourceContents
 
+PARALLEL_HTTP = "https://search.parallel.ai/mcp"
+SONDA_HTTP = "https://api.sondahub.com/mcp"
+DOC_URL = "https://modelcontextprotocol.io/introduction"
+
+print("Client SDK:", version("mcp"))
+print("Remote tool endpoint:", PARALLEL_HTTP)
+print("Document URL:", DOC_URL)
+```
+
+`PARALLEL_HTTP` and `SONDA_HTTP` identify MCP services. `DOC_URL` identifies a document that a fetching tool may retrieve. The notebook does not connect to the document as if it were an MCP endpoint.
+
+### 1.4 Define shared discovery and result-display helpers
+
+Tool discovery can be paginated. The helper follows `next_cursor` until every page has been received. The display helper distinguishes text blocks from other content and prints the tool error flag. A preview length limits printed text, not the amount fetched or retained by the server.
+
+```python
+async def discover_all_tools(client):
+    discovered = []
+    cursor = None
+
+    while True:
+        page = await client.list_tools(cursor=cursor)
+        discovered.extend(page.tools)
+        cursor = page.next_cursor
+        if cursor is None:
+            return discovered
+
+
+def show_tool_result(result, max_chars=1200):
+    print("Tool error flag:", result.is_error)
+    print("Structured content:", result.structured_content)
+
+    for block in result.content:
+        if isinstance(block, TextContent):
+            print("Text content:", block.text[:max_chars])
+        else:
+            print("Other content type:", type(block).__name__)
+```
+
+**Question:** Does constructing a client or listing a tool automatically execute that tool?
+
+<details>
+<summary>Show answer: configuration, discovery, and invocation</summary>
+
+No. Construction describes a target. Entering the client context opens communication and establishes a compatible protocol path. `list_tools()` requests metadata. `call_tool(name, arguments)` explicitly requests a tool operation. These are separate stages.
+
+</details>
+
+## Step 2: Use a real remote MCP server over Streamable HTTP
+
+**Goal:** Connect through an HTTPS endpoint before introducing any local server process.
+
+The [Parallel Search MCP documentation](https://docs.parallel.ai/integrations/mcp/search-mcp) currently documents anonymous lower-limit access at `https://search.parallel.ai/mcp`. It labels that standalone product **legacy** and recommends its newer product for new integrations. The supplied endpoint is retained here for the documented no-key example. A vendor's product label does not establish the MCP protocol revision; inspect the connection output.
+
+### 2.1 Follow the HTTP tool-call exchange
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as Colab application
+    participant C as MCP client
+    participant S as Parallel MCP server
+    participant W as Public documentation site
+
+    A->>C: Open Client(HTTPS endpoint)
+    C->>S: Establish MCP over Streamable HTTP
+    Note over C,S: SDK selects the compatible protocol version
+    A->>C: list_tools()
+    C->>S: POST tools/list
+    S-->>C: Tool names and JSON input schemas
+    C-->>A: Discovered tools
+    A->>C: call_tool(web_fetch, arguments)
+    C->>S: POST tools/call
+    S->>W: Retrieve permitted page content
+    W-->>S: Page content
+    S-->>C: MCP tool result
+    C-->>A: Content blocks, structured data, error flag
+```
+
+The notebook sends MCP messages to Parallel. Parallel fetches the document separately. HTTP carries JSON-RPC protocol messages and may return JSON or an SSE response stream; the SDK handles the wire format. Connection setup includes compatibility handling before the first ordinary listing.
+
+### 2.2 Discover the live tool contract and make one request
+
+Inspect the schema printed before the invocation. The supplied arguments follow the documented `web_fetch` contract; if the service advertises a different contract, stop and record the discrepancy rather than guessing a replacement tool name.
+
+```python
+remote_observation = {"status": "not_started"}
+try:
+    async with Client(PARALLEL_HTTP) as client:
+        print("Protocol version:", client.protocol_version)
+        print("Server identity:", client.server_info)
+        print("Server capabilities:", client.server_capabilities)
+
+        remote_tools = await discover_all_tools(client)
+        remote_registry = {tool.name: tool for tool in remote_tools}
+        print("Discovered tools:", list(remote_registry))
+        if "web_fetch" not in remote_registry:
+            raise RuntimeError("web_fetch was not advertised; inspect the catalog")
+        print("Input schema:")
+        print(json.dumps(remote_registry["web_fetch"].input_schema, indent=2))
+
+        result = await client.call_tool(
+            "web_fetch",
+            {"urls": [DOC_URL], "objective": "Explain the purpose of MCP"},
+        )
+        show_tool_result(result, max_chars=1600)
+        remote_observation = {
+            "status": "tool_error" if result.is_error else "returned",
+            "result": result.model_dump(mode="json"),
+        }
+except Exception as exc:
+    remote_observation = {
+        "status": "exception",
+        "error": f"{type(exc).__name__}: {str(exc)[:300]}",
+    }
+    print("HTTP example did not complete:", remote_observation["error"])
+```
+
+Record the endpoint, selected protocol, advertised schema, and returned data or error. An unavailable or rate-limited public endpoint does not prevent the local examples in Steps 3 and 8. Preserve the real failure; do not substitute invented successful output or repeatedly retry a rate-limited service.
+
+**Question:** Which URL is the MCP endpoint, which is the document, and who fetches the document?
+
+<details>
+<summary>Show answer: two separate network interactions</summary>
+
+`PARALLEL_HTTP` is the endpoint contacted by the MCP client. `DOC_URL` is an argument supplied to `web_fetch`. The remote server retrieves the page. `list_tools()` describes the operation; `call_tool()` requests it. The model is not involved.
+
+</details>
+
+**Question:** What do `properties`, `required`, and `type` explain, and what do they not guarantee?
+
+<details>
+<summary>Show answer: a schema is not a result</summary>
+
+They describe named input fields, mandatory fields, and expected value types. A valid-looking schema or argument object does not establish that a URL is reachable, that a tool will succeed, or that returned text is accurate. Inspect the actual result and error flag.
+
+</details>
+
+### 2.3 Optional HTTP resource read: SondaHub
+
+This short example contrasts a tool that fetches a document with an MCP resource read. The [SondaHub demonstration service](https://sondahub.com/mcp-server/) documents anonymous access and the resource `sondahub://guide`. Its published limit is **40 requests per minute per IP**, with temporary blocking after the limit. Shared networks can share that quota. This example is optional; Step 8 supplies local resource and prompt practice without that public endpoint.
+
+The service exposes additional capabilities, including simulated writes. This exercise only lists and reads a resource; it does not invoke those other tools.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as Colab application
+    participant C as MCP client
+    participant S as SondaHub MCP server
+
+    A->>C: Open Client(HTTPS endpoint)
+    C->>S: Establish MCP over Streamable HTTP
+    A->>C: list_resources()
+    C->>S: POST resources/list
+    S-->>C: Resource metadata and URIs
+    C-->>A: Available resource names and URIs
+    A->>C: read_resource(sondahub://guide)
+    C->>S: POST resources/read
+    S-->>C: Resource content
+    C-->>A: Text resource blocks
+```
+
+```python
+try:
+    async with Client(SONDA_HTTP) as client:
+        print("Protocol version:", client.protocol_version)
+        if client.server_capabilities.resources is None:
+            raise RuntimeError("This connection did not advertise resources")
+
+        page = await client.list_resources()
+        print("Resources on first page:", len(page.resources))
+        print("More pages:", page.next_cursor is not None)
+        for resource in page.resources[:8]:
+            print(resource.name, "|", resource.uri)
+
+        resource_result = await client.read_resource("sondahub://guide")
+        for item in resource_result.contents:
+            if isinstance(item, TextResourceContents):
+                print(item.text[:1600])
+            else:
+                print("Other resource content:", type(item).__name__)
+except Exception as exc:
+    print("Optional resource example:", type(exc).__name__, str(exc)[:300])
+```
+
+The list is deliberately limited to the first page to reduce requests. A directly readable known URI need not appear on that first page. Complete resource discovery would follow the listing's cursor, whereas this example reads the documented guide URI directly.
+
+**Question:** Why is `sondahub://guide` different from the HTTPS endpoint and from `web_fetch`?
+
+<details>
+<summary>Show answer: resource identity versus server address</summary>
+
+The HTTPS URL locates the server. The resource URI identifies data interpreted by that server. `read_resource(uri)` retrieves resource contents; `call_tool(name, arguments)` requests a tool operation. A resource URI is not necessarily an address that `requests.get()` can fetch. Neither request automatically sends the retrieved data to an LLM.
+
+</details>
+
+## Step 3: Change transport: launch local servers over stdio
+
+**Goal:** Use the same discovery and invocation operations while changing how the client reaches the server.
+
+| Aspect | Streamable HTTP | stdio |
+|---|---|---|
+| Configuration | MCP endpoint URL and required access | Executable command and arguments |
+| Server startup | Independent service | Client launches a subprocess |
+| Message channel | HTTP requests and responses | Server stdin and stdout pipes |
+| Port required for this MCP link? | HTTP listener | No |
+| Tool operations | `list_tools()`, `call_tool()` | The same methods |
+
+### 3.1 Define the Time and Fetch launch configurations
+
+```python
 uvx_path = shutil.which("uvx")
-assert uvx_path is not None, "uvx was not found; check installation."
+assert uvx_path is not None, "uvx not found; verify the uv installation"
 
 TIME_SERVER = StdioServerParameters(
     command=uvx_path,
     args=["mcp-server-time"],
 )
-
 FETCH_SERVER = StdioServerParameters(
     command=uvx_path,
     args=["mcp-server-fetch"],
 )
 
-print("MCP SDK version:", version("mcp"))
-print("uvx executable:", uvx_path)
-print("Time server package: mcp-server-time")
-print("Fetch server package: mcp-server-fetch")
+print("Local MCP runner:", uvx_path)
 ```
 
-`StdioServerParameters` contains launch instructions; it does not list tools or call a server. Entering `async with Client(...)` starts a subprocess, opens the MCP connection, and arranges for its closure when the context exits.
+`StdioServerParameters` supplies launch instructions, not tool schemas. Constructing it does not start a server. `uvx` runs each published server package in its own Python environment. The package launch may require downloads even though time calculation itself uses the local clock and timezone data.
 
-**Observe and record:** Identify the differences between the two server definitions. Explain why no tool input schemas appear in these configurations.
-
-<details>
-<summary>Show answer: launch configuration versus discovery</summary>
-
-The assignment names differ (`TIME_SERVER` and `FETCH_SERVER`), and the `args` values select different server packages. Both use the same `command=uvx_path`. The configurations describe how to launch processes; tool schemas arrive later through `list_tools()`. Constructing `StdioServerParameters` does not start a process.
-
-</details>
-
----
-
-
-### 1.4 Technical checks: the launcher and the Python utility
-
+#### Launcher checks
 **Question:** What is `uvx`, and how does it differ from the `mcp-server-time` package and the `mcp` package installed in Colab?
 
 
@@ -205,7 +351,43 @@ Check the package-download network connection, package-index access, package nam
 
 </details>
 
-## Step 2: Connect to the Time MCP server
+### 3.2 Follow the stdio message exchange
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as Colab application
+    participant C as MCP client
+    participant P as Local Time server process
+
+    A->>C: Open Client(StdioServerParameters)
+    C->>P: Launch subprocess via uvx
+    Note over C,P: MCP messages travel in stdin and stdout pipes
+    C->>P: Protocol setup over stdio
+    A->>C: list_tools()
+    C->>P: tools/list over stdin
+    P-->>C: Schemas over stdout
+    C-->>A: Discovered tool definitions
+    A->>C: call_tool(get_current_time, arguments)
+    C->>P: tools/call over stdin
+    P-->>C: Tool result over stdout
+    C-->>A: Result content and status
+    A->>C: Exit client context
+    Note over C,P: Cleanup follows the SDK subprocess lifecycle
+```
+
+Client requests are written to the server's stdin; server messages return through stdout. Stderr carries diagnostics and must not be confused with the protocol stream. Ordinary debug text on protocol stdout can corrupt decoding. SDKs may capture or redirect some output, but server logging should still target stderr.
+
+**Question:** Why can a correct calculator still fail as an MCP server if it prints debug text on protocol stdout?
+
+<details>
+<summary>Show answer: framing and diagnostics</summary>
+
+The client expects a sequence of correctly framed MCP messages. Unrelated text can fail decoding before the tool result is interpreted. Arithmetic correctness does not establish communication correctness. Use stderr for diagnostics.
+
+</details>
+
+### 3.3 Open a Time client connection
 
 **Goal:** Open a client connection and inspect protocol information before requesting a tool.
 
@@ -221,7 +403,7 @@ print("Time connection closed")
 
 The client connects when the `async with` block begins. It communicates with the server while the block is active. After the block, the client object must not be reused for a tool call. Later cells deliberately open new connections, which keeps each example independent.
 
-### Why is the code asynchronous?
+#### Why is the code asynchronous?
 
 The client waits for a separate process to respond. `async with` manages the connection lifecycle; `await` waits for an individual operation. A notebook supports these constructs directly, so `asyncio.run(...)` is not required inside the Colab cells.
 
@@ -244,7 +426,7 @@ The client waits for a separate process to respond. `async with` manages the con
 
 ---
 
-## Step 3: Discover Time server tools and inspect schemas
+### 3.4 Discover Time tools and inspect schemas
 
 **Goal:** Find out what the server offers **without executing either of its time tools**.
 
@@ -266,7 +448,7 @@ async with Client(TIME_SERVER) as client:
 
 The reference Time server normally returns all tools in one page. In general, `next_cursor` signals that additional pages must be requested with `list_tools(cursor=...)`; a complete discovery process must continue until the cursor is `None`.
 
-### Record the schema
+#### Record the schema
 
 | Discovered tool | Required argument names | Expected argument types |
 |---|---|---|
@@ -286,27 +468,7 @@ In a JSON Schema, `properties` describes named fields, each field's `type` descr
 
 ---
 
-## Step 4: Execute Time tools and inspect the results
-
-**Goal:** Make explicit tool calls through MCP and distinguish successful results from error reports.
-
-### 4.1 Define a small result-display helper
-
-The result can contain text blocks, optional structured content, and an error flag. Different tools may return different forms of content, so the client should not assume every content block is plain text.
-
-```python
-def show_tool_result(result, max_chars=1200):
-    print("Tool error flag:", result.is_error)
-    print("Structured content:", result.structured_content)
-
-    for block in result.content:
-        if isinstance(block, TextContent):
-            print("Text content:", block.text[:max_chars])
-        else:
-            print("Other content type:", type(block).__name__)
-```
-
-### 4.2 Get the current time in Helsinki
+### 3.5 Get the current time in Helsinki
 
 ```python
 async with Client(TIME_SERVER) as client:
@@ -321,7 +483,7 @@ The tool result is produced at execution time. It should contain current time in
 
 **Experiment:** Repeat the call with `Asia/Tokyo` and `America/New_York`. Record the returned timezone and datetime values. No particular timestamp is expected.
 
-### 4.3 Convert a clock time between regions
+### 3.6 Convert a clock time between regions
 
 ```python
 async with Client(TIME_SERVER) as client:
@@ -351,13 +513,13 @@ For the timezone experiment, compare the returned timezone, datetime, and offset
 
 ---
 
-## Step 5: Connect to a completely different server: Fetch MCP
+### 3.7 Use a second local provider: Fetch MCP
 
 **Goal:** Test whether the **same MCP client interface** works with a tool that retrieves website content instead of calculating time.
 
 The Fetch server implements a `fetch` tool that accepts a URL and optional controls such as `max_length` and `start_index`. It can convert HTML into readable Markdown. Unlike the Time server, this server needs network access **when its tool executes**, not only when its package is downloaded.
 
-### 5.1 Discover the Fetch tool
+#### 3.7.1 Discover the Fetch tool
 
 ```python
 async with Client(FETCH_SERVER) as client:
@@ -383,7 +545,7 @@ Find `url` in the tool's `input_schema["properties"]`, then check whether `url` 
 
 </details>
 
-### 5.2 Fetch a public informational page
+#### 3.7.2 Fetch a public informational page
 
 Use `https://example.com/` as a small public demonstration page. The request is deliberately limited to a short response.
 
@@ -403,7 +565,7 @@ A successful result should contain readable page content. The exact response can
 
 **Security and access note:** The server's default robots.txt protections should remain enabled. No `--ignore-robots-txt` option is used. Fetch only public content that may legitimately be accessed; do not supply internal service URLs, credentials, or private data. The Fetch server also applies restrictions to private-network addresses, but application-level review of server permissions is still necessary.
 
-### 5.3 A second example with a different argument
+#### 3.7.3 A second example with a different argument
 
 ```python
 async with Client(FETCH_SERVER) as client:
@@ -432,7 +594,7 @@ Both use `async with Client(...)` and the same discovery and invocation methods.
 ---
 
 
-### Technical check: stdio versus Streamable HTTP
+#### Transport comparison check
 
 **Question:** How do `stdio` and Streamable HTTP differ? Does the Fetch server use HTTP as its MCP transport in this activity?
 
@@ -450,9 +612,41 @@ The [SDK transport documentation](https://py.sdk.modelcontextprotocol.io/client/
 
 </details>
 
-## Step 6: Demonstrate the benefit: one reusable client routine
+## Step 4: Coordinate multiple servers through one reusable workflow
 
-**Goal:** Reuse one function with two different MCP servers **without importing either server's internal implementation**.
+**Goal:** Use HTTP and stdio configurations without changing the common discovery and invocation methods.
+
+```mermaid
+flowchart LR
+    app["Trip-planning host application"]
+    subgraph connections["MCP client connections"]
+        ch["HTTP MCP client"]
+        ct["Time stdio MCP client"]
+        cf["Fetch stdio MCP client"]
+    end
+    subgraph services["Independent MCP servers"]
+        h["Parallel remote server"]
+        t["Local Time server"]
+        f["Local Fetch server"]
+    end
+    web["Public web content"]
+    app --> ch
+    app --> ct
+    app --> cf
+    ch <-->|"Streamable HTTP"| h
+    ct <-->|"stdin / stdout"| t
+    cf <-->|"stdin / stdout"| f
+    h <-->|"HTTPS"| web
+    f <-->|"HTTPS"| web
+    classDef host fill:#e1f5fe,stroke:#0288d1,color:#102c3b
+    classDef client fill:#fff3e0,stroke:#f57c00,color:#54300a
+    classDef server fill:#e8f5e9,stroke:#388e3c,color:#14361b
+    class app host
+    class ch,ct,cf client
+    class h,t,f,web server
+```
+
+The host coordinates separate client relationships with Parallel, Time, and Fetch. The remote and local fetch tools can independently make HTTPS requests to websites. Those outgoing requests are distinct from their MCP transport.
 
 The previous steps used similar code repeatedly. That repetition is useful initially because it exposes the protocol operations. The next function collects the shared operations into a reusable client workflow:
 
@@ -469,31 +663,19 @@ flowchart LR
     discover --> choose["Select discovered tool"]
     choose --> invoke["Call tool with arguments"]
     invoke --> result["Inspect result or error"]
-    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b;
-    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
-    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b;
-    class cfg input;
-    class conn,discover,choose,invoke process;
-    class result output;
+    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a
+    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b
+    class cfg input
+    class conn,discover,choose,invoke process
+    class result output
 ```
 
-### 6.1 Define the reusable client
+### 4.1 Define the reusable client
 
 The helper follows pagination in case a server does not return all tool definitions in one response. The registry prevents a request for a tool name that was not discovered. This is a useful basic check, but it does not establish that the server itself is trustworthy or that every argument value is safe.
 
 ```python
-async def discover_all_tools(client):
-    discovered = []
-    cursor = None
-
-    while True:
-        page = await client.list_tools(cursor=cursor)
-        discovered.extend(page.tools)
-        cursor = page.next_cursor
-        if cursor is None:
-            return discovered
-
-
 async def explore_and_call(server_config, label, tool_name, arguments):
     print("\nSERVER:", label)
 
@@ -516,11 +698,11 @@ async def explore_and_call(server_config, label, tool_name, arguments):
             show_tool_result(result, max_chars=600)
 
     except Exception as exc:
-        print("Connection or protocol exception:",
+        print("Connection, protocol, or local exception:",
               type(exc).__name__, str(exc)[:300])
 ```
 
-### 6.2 Run the **same function** with two servers
+### 4.2 Run the same function with three providers and two transports
 
 ```python
 await explore_and_call(
@@ -536,23 +718,29 @@ await explore_and_call(
     "fetch",
     {"url": "https://example.com/", "max_length": 600},
 )
+
+await explore_and_call(
+    PARALLEL_HTTP,
+    "Parallel (Streamable HTTP)",
+    "web_fetch",
+    {"urls": [DOC_URL], "objective": "Explain MCP in one sentence"},
+)
 ```
 
 **Observe:** No Python implementation of time conversion or HTTP fetching was copied into the `explore_and_call` function. The function works by using a **common protocol interface**. The server configuration, selected tool, and arguments change; the connection, discovery, invocation, and result-handling logic does not.
 
 This is the central practical benefit of MCP in this demonstration. A trip planner could use a Time MCP server today and later add an unrelated geographical MCP server without redefining how clients connect and discover operations. The application would still need to choose relevant tools, verify permissions, validate inputs, and interpret returned data.
 
-### 6.3 Compare the two client executions
+### 4.3 Compare the client executions
 
-| Observation | Time MCP server | Fetch MCP server |
-|---|---|---|
-| Same `Client(...)` interface? | | |
-| Same `list_tools()` operation? | | |
-| Same `call_tool(...)` operation? | | |
-| Discovered tool name | | |
-| Required argument names | | |
-| Server's underlying operation | | |
-| Form of returned data | | |
+| Observation | Parallel HTTP | Time stdio | Fetch stdio |
+|---|---|---|---|
+| Endpoint or launch command | | | |
+| Who starts the server? | | | |
+| Discovered tool and required arguments | | | |
+| Same discovery and invocation methods? | | | |
+| Does the tool itself make a web request? | | | |
+| Returned data or error | | | |
 
 **Questions:** What remained invariant across the two calls? Why does dynamic discovery help when a developer does not control the tool provider? Does a common invocation interface mean all tools use the same arguments or return the same data?
 
@@ -567,7 +755,119 @@ The registry checks whether the name was discovered. Printing `required` does no
 
 ---
 
-## Step 7: Compare two application architectures
+### 4.4 Optional: keep three connections open together
+
+The preceding function opens and closes one connection per call. This optional cell instead keeps three distinct clients active in one host. `AsyncExitStack` manages their contexts; it does not turn them into one protocol session. The calls below remain sequential, not parallel.
+
+```python
+SERVER_CONFIGS = {
+    "remote_web": PARALLEL_HTTP,
+    "local_time": TIME_SERVER,
+    "local_fetch": FETCH_SERVER,
+}
+
+try:
+    async with AsyncExitStack() as stack:
+        clients = {}
+        catalog_by_server = {}
+        for label, config in SERVER_CONFIGS.items():
+            clients[label] = await stack.enter_async_context(Client(config))
+            catalog_by_server[label] = await discover_all_tools(clients[label])
+            print(label, "tools:", [tool.name for tool in catalog_by_server[label]])
+
+        result = await clients["local_time"].call_tool(
+            "get_current_time", {"timezone": "Europe/Helsinki"}
+        )
+        show_tool_result(result, max_chars=500)
+    print("Client contexts exited")
+except Exception as exc:
+    print("Optional multi-client example:", type(exc).__name__, str(exc)[:300])
+```
+
+If a connection fails while entering this optional block, the stack cleans up previously entered contexts. That failure does not prove that all other providers are unavailable. Avoid repeatedly fetching the same remote document just to demonstrate that several connections exist.
+
+**Question:** Can identical tool names from two servers be placed into one name-only registry safely?
+
+<details>
+<summary>Show answer: preserve provider identity</summary>
+
+Not without a collision policy. Retain a pair such as `(server_label, tool_name)` or use deliberate prefixes. The optional example keeps catalogs and clients indexed by server label. The provider identity determines where a request must be sent.
+
+</details>
+
+## Step 5: Explain protocol compatibility and the two protocol eras
+
+**Goal:** Explain setup already performed by the SDK when the earlier client contexts opened.
+
+A transport carries messages. A protocol revision defines their rules. A tool schema defines one operation's arguments. These three choices must not be conflated.
+
+### 5.1 Understand automatic discovery and legacy fallback
+
+The [Python SDK protocol guide](https://py.sdk.modelcontextprotocol.io/protocol-versions/) documents `mode="auto"` as the default: it probes with `server/discover`, and can fall back to legacy initialization. This is SDK behavior. Modern MCP does not require that probe as a universal initialization handshake.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant App as Colab application
+    participant Client as Python SDK client in auto mode
+    participant Server as Configured MCP server
+    App->>Client: Enter async client context
+    Client->>Server: server/discover probe
+    alt Modern discovery supported
+        Server-->>Client: Revisions, capabilities, and identity
+        Note over Client,Server: SDK selects a compatible modern revision
+    else Recognized legacy compatibility path
+        Server-->>Client: Discovery unsupported
+        Client->>Server: initialize with proposed version and capabilities
+        Server-->>Client: Selected version and server capabilities
+        Note over Client,Server: Client checks compatibility
+        Client->>Server: notifications/initialized
+    end
+    Client-->>App: Connected client with protocol metadata
+    Note over Client,Server: Normal operations require a compatible path
+    App->>Client: list_tools()
+    Client->>Server: tools/list
+    Server-->>Client: Individual tool definitions
+```
+
+If no compatible version exists, the client cannot continue normally. Authentication failures, rate limits, and unreachable endpoints must not simply be relabeled as legacy-protocol detection.
+
+### 5.2 Keep older and newer behavior separate
+
+| Concern | Revisions through `2025-11-25` | Revision `2026-07-28` |
+|---|---|---|
+| Initial exchange | `initialize`, response, `notifications/initialized` | No initialization handshake |
+| Compatibility information | Agreed during initialization | Declared per request; optional `server/discover` |
+| HTTP sessions | Stateful implementations could use `Mcp-Session-Id` | No protocol-level session mechanism |
+| Application data | Can exist in memory or a database | Can still exist in memory or a database |
+
+The [modern versioning specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning) permits discovery before normal requests or handling an unsupported-version response. The [older lifecycle specification](https://modelcontextprotocol.io/specification/2025-11-25/basic/lifecycle) defines initialization. The [modern HTTP transport specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) removes the separate GET stream and protocol sessions while retaining request-scoped POST response streams.
+
+`server/discover` identifies protocol support and server capabilities. `tools/list` describes individual tool contracts. A server can support the tools capability without every desired tool name being present.
+
+### 5.3 Inspect metadata already recorded
+
+Use the outputs from Steps 2 and 3 to compare `client.protocol_version`, identity, and capabilities. No extra remote requests are needed just to repeat those observations. Missing outputs because a connection failed should be recorded as unavailable, not replaced with guessed protocol values.
+
+**Question:** Is SDK v2 the same as protocol revision `2026-07-28`, and does HTTP imply the newer revision?
+
+<details>
+<summary>Show answer: implementation, revision, and transport</summary>
+
+No. SDK versions identify implementation releases; dated revisions identify protocol rules. One SDK can support several revisions. HTTP and stdio can each carry supported older or newer protocol behavior. Observe the selected version rather than inferring it from the package or transport.
+
+</details>
+
+**Question:** Does a stateless protocol prohibit a server cache or database? Is a reported server name proof of trust?
+
+<details>
+<summary>Show answer: state and identity</summary>
+
+No. Protocol statelessness concerns the message/session mechanism, not a ban on application data. A process can retain data while running and a database can persist it longer. Self-reported server identity is metadata, not independent proof of publisher identity, permission, or data accuracy.
+
+</details>
+
+## Step 6: Compare two application architectures
 
 **Goal:** Explain the benefits of MCP using the evidence collected in the previous steps.
 
@@ -581,12 +881,12 @@ flowchart LR
     app --> wa["Web-content wrapper"]
     ta --> ts["Time service or library"]
     wa --> ws["Website request"]
-    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b;
-    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
-    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b;
-    class app input;
-    class ta,wa process;
-    class ts,ws output;
+    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a
+    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b
+    class app input
+    class ta,wa process
+    class ts,ws output
 ```
 
 ### Architecture B: standardized MCP client connections
@@ -598,12 +898,12 @@ flowchart LR
     app["Trip-planning application"] --> client["Reusable MCP client workflow"]
     client --> t["Time MCP server"]
     client --> f["Fetch MCP server"]
-    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b;
-    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
-    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b;
-    class app input;
-    class client process;
-    class t,f output;
+    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a
+    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b
+    class app input
+    class client process
+    class t,f output
 ```
 
 ### Side-by-side comparison
@@ -626,7 +926,7 @@ flowchart LR
 <details>
 <summary>Show answer: evidence from two independent servers</summary>
 
-The calls in Step 6 reuse `explore_and_call` unchanged with `TIME_SERVER` and `FETCH_SERVER`. Inside the helper, `client.list_tools(...)` and `client.call_tool(...)` are the same methods in both cases. The server launch configuration, selected tool, and argument dictionary change. One server would show only that one integration works; two unrelated implementations show that the shared workflow crosses capability boundaries.
+The calls in Step 4 reuse `explore_and_call` unchanged with `TIME_SERVER` and `FETCH_SERVER`. Inside the helper, `client.list_tools(...)` and `client.call_tool(...)` are the same methods in both cases. The server launch configuration, selected tool, and argument dictionary change. One server would show only that one integration works; two unrelated implementations show that the shared workflow crosses capability boundaries.
 
 </details>
 
@@ -646,11 +946,11 @@ A direct API call can be simpler for one stable, known endpoint when dynamic dis
 
 </details>
 
-## Step 8: Inspect failures without losing the distinction between layers
+## Step 7: Inspect failures without losing the distinction between layers
 
 **Goal:** Distinguish an invalid tool request, a reported execution error, and a connection problem.
 
-### 8.1 Call Time tools with invalid arguments
+### 7.1 Call Time tools with invalid arguments
 
 ```python
 TEST_CASES = [
@@ -679,15 +979,15 @@ flowchart LR
     err -->|"No"| ok["Validate and interpret result"]
     err -->|"Yes"| bad["Inspect tool error"]
     ret -->|"Raises"| ex["Inspect protocol or connection exception"]
-    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
-    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b;
-    classDef error fill:#fce4ec,stroke:#c2185b,color:#54192a;
-    class start,ret,err process;
-    class ok output;
-    class bad,ex error;
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a
+    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b
+    classDef error fill:#fce4ec,stroke:#c2185b,color:#54192a
+    class start,ret,err process
+    class ok output
+    class bad,ex error
 ```
 
-### 8.2 Record the outcomes
+### 7.2 Record the outcomes
 
 | Test | `is_error` result or raised exception? | Valid time returned? |
 |---|---|---|
@@ -708,11 +1008,11 @@ If the launch fails, check the executable path, package download, compatible env
 
 ---
 
-## Step 9 — Discover resources and prompts using the same MCP client
+## Step 8: Discover resources and prompts using the same MCP client
 
 **Goal:** Extend the client workflow beyond tools. Use the MCP SDK to discover a resource, read its contents, discover a prompt, and retrieve a completed prompt message. No LLM or LangChain is involved.
 
-So far, the Time and Fetch servers have provided **tools**. MCP can also expose **resources** and **prompts**. These are different capabilities; a server is not required to provide all three.
+The earlier tools performed operations, and optional Step 2.3 read a remote resource. This section uses a supplied local server for deeper resource and prompt practice. MCP can also expose **resources** and **prompts**. These are different capabilities; a server is not required to provide all three.
 
 | MCP capability | What it provides | Typical control | Client operations |
 |---|---|---|---|
@@ -722,9 +1022,9 @@ So far, the Time and Fetch servers have provided **tools**. MCP can also expose 
 
 In this demonstration, Python explicitly chooses all three. In an LLM application, a prompt normally supplies messages to the model; retrieving the prompt **does not itself run the model**. Similarly, reading an MCP resource retrieves data; it does not automatically insert that data into an LLM conversation.
 
-### 9.1 Prepare a small supplied demonstration server
+### 8.1 Prepare a small supplied demonstration server
 
-The two existing servers have already illustrated independently provided **tools**. To make resources and prompts observable, the following **supplied demonstration server** offers one resource and one prompt. The server code is provided only to make the client exercise self-contained. **No server implementation or modification is required in this activity.** The client tasks do not require knowledge of how to implement these registrations.
+The existing remote and local providers have illustrated independently provided tools. To make resources and prompts observable, the following **supplied demonstration server** offers one resource and one prompt. The server code is provided only to make the client exercise self-contained. **No server implementation or modification is required in this activity.** The client tasks do not require knowledge of how to implement these registrations.
 
 Run the following code in one Colab cell. The `%%writefile` line must be the first line of that cell.
 
@@ -766,9 +1066,9 @@ The resource is identified by the URI `trip://notes/helsinki`. The prompt is ide
 
 This program contains the server-side registrations so the notebook can connect to something that genuinely exposes the two capabilities. The tasks below focus only on **using the client**.
 
-### 9.2 Connect to the supplied server
+### 8.2 Connect to the supplied server
 
-The notebook runs the server using its current Python interpreter. No extra package, Node.js installation, external service, or API key is required beyond Step 1.
+The notebook runs the server using its current Python interpreter. No extra package, Node.js installation, external service, or API key is required beyond Step 1. Once dependencies are installed, this supplied example works without the public HTTP endpoints.
 
 ```python
 import sys
@@ -787,7 +1087,7 @@ async with Client(TRIP_CONTEXT_SERVER) as client:
 
 **Observe:** The same `Client(...)` context that was used with Time and Fetch also connects to this server. The client does not need to import `helsinki_notes` or `outline_day_trip` as ordinary Python functions.
 
-### 9.3 Discover and read a resource
+### 8.3 Discover and read a resource
 
 The client first asks for the advertised resources, then reads one using its URI.
 
@@ -833,7 +1133,7 @@ async with Client(TRIP_CONTEXT_SERVER) as client:
           [item.uri_template for item in templates.resource_templates])
 ```
 
-### 9.4 Discover and retrieve a prompt
+### 8.4 Discover and retrieve a prompt
 
 A prompt is **not a tool that executes the trip plan**. It is a server-defined recipe for constructing one or more messages. The client can inspect the available templates and fill in their named arguments.
 
@@ -872,7 +1172,7 @@ The prompt's `city` argument is required. `focus` is optional because the suppli
 
 </details>
 
-### 9.5 Compare all three MCP capabilities
+### 8.5 Compare all three MCP capabilities
 
 ```mermaid
 flowchart LR
@@ -880,12 +1180,12 @@ flowchart LR
     client -->|"tools/list and tools/call"| t["Tools: execute an operation"]
     client -->|"resources/list and resources/read"| r["Resources: read data by URI"]
     client -->|"prompts/list and prompts/get"| p["Prompts: retrieve messages"]
-    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b;
-    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
-    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b;
-    class app input;
-    class client process;
-    class t,r,p output;
+    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a
+    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b
+    class app input
+    class client process
+    class t,r,p output
 ```
 
 | Observation | Tool | Resource | Prompt |
@@ -916,7 +1216,7 @@ A server need not expose all three. Check advertised capabilities before assumin
 
 ---
 
-## Step 10: Brief preview: what is inside an MCP server?
+## Step 9: Brief preview: what is inside an MCP server?
 
 **Goal:** Connect the observable client behavior with the server implementation, without building a server in this activity.
 
@@ -950,23 +1250,23 @@ if __name__ == "__main__":
 <details>
 <summary>Show answer: execution stays behind the server boundary</summary>
 
-The server executes `estimate_daily_budget`. The client needs the exposed name and argument schema to construct a request. It does not need the Python source because the server handles execution and returns the result. A different implementation language could expose the same MCP tool contract. This preview is optional; Step 9 already supplies the server needed for resource and prompt practice.
+The server executes `estimate_daily_budget`. The client needs the exposed name and argument schema to construct a request. It does not need the Python source because the server handles execution and returns the result. A different implementation language could expose the same MCP tool contract. This preview is optional; Step 8 already supplies the server needed for resource and prompt practice.
 
 </details>
 
 ---
 
-## Step 11: Security: code trust and data trust are different
+## Step 10: Security: code trust and data trust are different
 
 **Goal:** Recognize two trust boundaries introduced by external capabilities.
 
-### 11.1 Trusting executable server code
+### 10.1 Trusting executable server code
 
 A local `stdio` MCP server is a program launched by the client application. It executes with the permissions available to its process unless separately restricted. Installing or running a server from an unknown publisher can expose files, network access, credentials, and other local resources. MCP standardizes the communication interface; it does **not** certify that the server implementation is safe.
 
 The Fetch server illustrates a related concern: a tool that retrieves public websites requires access to an external network, and unrestricted URL fetching can create security problems. Use reviewed server packages, preserve relevant network protections, and configure only the permissions needed by the application.
 
-### 11.2 Treating returned content as data, not as instructions
+### 10.2 Treating returned content as data, not as instructions
 
 A fetched webpage or shared note may contain text written by someone other than the application developer. That text is not automatically trustworthy simply because an MCP tool delivered it.
 
@@ -1004,9 +1304,7 @@ No language model is used here, so this activity **does not test an LLM's resist
 
 ---
 
-## Step 12: Reflection and completion evidence
-
-### Reflection questions
+### 10.3 Reflection questions
 
 Record concise answers in a final Colab Markdown cell.
 
@@ -1023,6 +1321,8 @@ Record concise answers in a final Colab Markdown cell.
 11. What can an MCP server implement behind the protocol boundary?
 12. Why must a fetched webpage be treated as data rather than as instructions?
 13. How do resource discovery and reading differ from prompt discovery and retrieval? Does either operation generate a trip plan by itself?
+14. Which parts of the workflow remain the same when a URL replaces a stdio launch configuration?
+15. Why is protocol negotiation explained after the transport demonstrations even though setup occurs before tool listing?
 
 <details>
 <summary>Show suggested reflection answers</summary>
@@ -1040,21 +1340,28 @@ Record concise answers in a final Colab Markdown cell.
 11. A server can expose code backed by local calculations, files, databases, or external APIs. The MCP boundary standardizes access rather than prescribing those implementations.
 12. Webpage text comes from an external source. It can contain inaccurate information or injected instructions and must not acquire trusted instruction priority.
 13. `list_resources()` describes available resources; `read_resource()` returns one resource's contents. `list_prompts()` describes available prompts; `get_prompt()` returns messages filled with arguments. Neither read requires an LLM or generates a trip plan by itself.
+14. Client contexts, discovery, named invocation, and result checks remain the same. Target configuration and provider contracts differ.
+15. Teaching order introduces concrete requests before explaining setup internals. Runtime order still establishes compatibility before ordinary discovery and tool use.
 
 </details>
 
 
-### Completion checklist
+### 10.4 Completion checklist
 
 - [ ] Client SDK and `uv` installed; SDK version printed.
+- [ ] Remote HTTP tool discovery and one tool call attempted; actual success or failure recorded.
+- [ ] Endpoint URL distinguished from document URL and resource URI.
+- [ ] Optional SondaHub example completed or deliberately skipped; local Step 8 practice retained.
 - [ ] Connection to Time server established; protocol metadata inspected.
 - [ ] Time tools and JSON input schemas discovered.
 - [ ] `get_current_time` and `convert_time` invoked with valid arguments.
 - [ ] Fetch server discovered and `fetch` invoked on a permitted public page.
-- [ ] The same reusable client function executed against both servers.
+- [ ] The reusable routine called with Time, Fetch, and an HTTP target; observed outcomes recorded.
+- [ ] Mixed-transport comparison table completed.
+- [ ] Protocol revisions distinguished from SDK versions and transport selection.
 - [ ] Architecture comparison table completed using observed outputs.
 - [ ] Invalid argument and unknown-tool outcomes recorded.
-- [ ] Supplied Step 9 server file created and its resource and prompt capabilities inspected.
+- [ ] Supplied Step 8 server file created and its resource and prompt capabilities inspected.
 - [ ] Resource discovered and read; prompt discovered and retrieved with arguments.
 - [ ] Tool/resource/prompt comparison completed and prompt mini-experiment recorded.
 - [ ] MCP/API, transport, `uvx`, and `shutil.which` questions answered.
@@ -1065,18 +1372,18 @@ Record concise answers in a final Colab Markdown cell.
 
 ## Final takeaway
 
-The Time server and Fetch server offer different capabilities, but the application uses the **same MCP connection, discovery, and invocation operations** for both. This is the benefit demonstrated by the two-server exercise: independently implemented capabilities can be accessed through one standard interface. Tool schemas and results remain specific to each server, while execution and trust responsibilities remain explicit.
-
-A higher-level framework such as LangChain can convert discovered MCP tools into model-usable tools and help orchestrate agent execution. **LangChain is optional for MCP communication**; the direct client examples already establish that the protocol works without a language model.
+HTTP connects to an independently running MCP endpoint. Stdio starts a local subprocess. Both expose common discovery and request operations. One host can coordinate several such client relationships, but provider identities, schemas, permissions, data, and failures remain distinct. Protocol compatibility enables communication; it does not select tools or guarantee that results are correct.
 
 ## References
 
 - [MCP Python SDK v2: Client](https://py.sdk.modelcontextprotocol.io/client/)
-- [MCP Python SDK v2: What's new](https://py.sdk.modelcontextprotocol.io/whats-new/)
-- [MCP Python SDK v2: Client transports](https://py.sdk.modelcontextprotocol.io/client/transports/)
-- [Time MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/time)
-- [Fetch MCP Server and access restrictions](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch)
-- [FastMCP documentation: optional server preview](https://gofastmcp.com/)
-- [uv tool runner and isolated environments](https://docs.astral.sh/uv/guides/tools/)
+- [MCP Python SDK: Client transports](https://py.sdk.modelcontextprotocol.io/client/transports/)
+- [MCP Python SDK: Protocol versions](https://py.sdk.modelcontextprotocol.io/protocol-versions/)
+- [Parallel Search MCP: endpoint and tool documentation](https://docs.parallel.ai/integrations/mcp/search-mcp)
+- [SondaHub: public MCP resource demonstration and rate limits](https://sondahub.com/mcp-server/)
+- [Time reference MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/time)
+- [Fetch reference MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch)
+- [MCP modern protocol versioning](https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning)
+- [MCP handshake-era lifecycle](https://modelcontextprotocol.io/specification/2025-11-25/basic/lifecycle)
+- [uv tool runner](https://docs.astral.sh/uv/guides/tools/)
 - [Python shutil.which](https://docs.python.org/3/library/shutil.html#shutil.which)
-- [MCP architecture](https://modelcontextprotocol.io/docs/learn/architecture)

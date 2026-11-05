@@ -6,8 +6,10 @@
 
 **Topic:** Understanding MCP Clients: Why a Common Tool Protocol Matters
 
-- [Theory](./material/theory.md)
-- [Demo/Activity 1](./material/activity1.md)
+- Theory
+  - [Model Context Protocol (MCP): Connecting AI Applications to Tools and Data](./material/theory.md)
+  - [MCP Client–Server Communication: HTTP, Multiple Servers, and stdio](./material/mcp_client_server.md)
+- [Demo / Activity 1](./material/activity1.md)
 - Activity 2: [Part A](./material/activity2a.md), [Part B](./material/activity2b.md)
 - [Week 2 Homework Solution](./material/w2-homework-sol.md)
 
@@ -15,7 +17,9 @@
 
 ## Afternoon: Sprint 1 Review & Sprint 2 Planning
 
-### 1. Sprint 1 Presentations: Jigsaw Challenge
+### 1. **Mock Zoom Poll**
+
+### 2. Sprint 1 Presentations: Jigsaw Challenge
 
 **Read the following instructions before starting:**
 
@@ -35,7 +39,7 @@
 4. **Zoom Poll:**  Please vote for the Best Presentation and the two strongest Concept Connectors from their Jigsaw room.
 5. **Results and showcase:** Group scores are normalized, and the top one or two groups may be invited to present to the whole class, depending on the available time.
 
-### 2. Sprint 2 Planning
+### 3. Sprint 2 Planning
 
 After the Jigsaw Challenge, we return to  **original breakout rooms** to begin Sprint 2 planning.
 

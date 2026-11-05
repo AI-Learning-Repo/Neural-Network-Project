@@ -2,7 +2,7 @@
 
 **Learning objective:** Explain how an application discovers and uses MCP capabilities over HTTP or stdio, coordinates multiple servers, and establishes protocol compatibility.
 
-## 1. Begin with HTTP: who communicates with whom?
+## 1. Who communicates with whom?
 
 The **Model Context Protocol (MCP)** defines messages through which applications access server-provided capabilities. Three roles are involved:
 

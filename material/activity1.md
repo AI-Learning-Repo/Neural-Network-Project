@@ -221,7 +221,7 @@ They describe named input fields, mandatory fields, and expected value types. A 
 
 </details>
 
-### 2.3 Optional HTTP resource read: SondaHub
+### 2.3 HTTP resource read: SondaHub
 
 This short example contrasts a tool that fetches a document with an MCP resource read. The [SondaHub demonstration service](https://sondahub.com/mcp-server/) documents anonymous access and the resource `sondahub://guide`. Its published limit is **40 requests per minute per IP**, with temporary blocking after the limit. Shared networks can share that quota. This example is optional; Step 8 supplies local resource and prompt practice without that public endpoint.
 
@@ -291,6 +291,110 @@ The HTTPS URL locates the server. The resource URI identifies data interpreted b
 | Message channel | HTTP requests and responses | Server stdin and stdout pipes |
 | Port required for this MCP link? | HTTP listener | No |
 | Tool operations | `list_tools()`, `call_tool()` | The same methods |
+
+<details>
+<summary>High-level view: starting a server subprocess</summary>
+
+When a Colab notebook opens an MCP `stdio` connection, the client starts a **separate server process**. The two programs do not become one Python process. Closing the client context closes the connection and cleans up the subprocess.
+
+```mermaid
+flowchart TB
+    subgraph Parent["Parent process: Colab Python"]
+        nb["Notebook code"]
+        client["MCP client"]
+        nb --> client
+    end
+
+    subgraph Child["Child process"]
+        server["MCP server program"]
+    end
+
+    client -->|"Launch subprocess"| server
+    server -.->|"Process ends on cleanup"| client
+
+    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b;
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
+    class nb input;
+    class client,server process;
+```
+
+**Observe:** `async with Client(SERVER_CONFIG)` opens the connection and, for a `stdio` configuration, launches the local server. The client and server have separate Python execution environments and exchange messages instead of importing each other's functions. The word *subprocess* is more precise than *fork*: Python may use different operating-system mechanisms to create the child process.
+
+**Zoom in: where MCP messages travel**
+
+With the `stdio` transport, the client's request is written to the **server's standard input (`stdin`)**. The server's response is read from the **server's standard output (`stdout`)**. Diagnostic messages use **standard error (`stderr`)**, which is separate from the MCP protocol stream.
+
+```mermaid
+flowchart TB
+    client["MCP client"]
+
+    subgraph Server["MCP server subprocess"]
+        input["stdin: receive request"]
+        work["Execute requested tool"]
+        output["stdout: send response"]
+        error["stderr: diagnostics"]
+        input --> work --> output
+        work -.-> error
+    end
+
+    log["Diagnostic destination"]
+
+    client -->|"JSON-RPC request"| input
+    output -->|"JSON-RPC response"| client
+    error -.->|"Log messages"| log
+
+    classDef inputStyle fill:#e1f5fe,stroke:#0288d1,color:#102c3b;
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
+    classDef outputStyle fill:#e8f5e9,stroke:#388e3c,color:#14361b;
+    classDef diagnostics fill:#fce4ec,stroke:#c2185b,color:#54192a;
+    class input inputStyle;
+    class client,work process;
+    class output outputStyle;
+    class error,log diagnostics;
+```
+
+**Observe:** The server's `stdout` must be reserved for MCP protocol responses. Ordinary `print()` calls inside a `stdio` server could corrupt the protocol if they write to `stdout`. Logs and warnings belong on `stderr`. A message on `stderr` is not necessarily a tool failure.
+
+**Zoom in: why redirect `sys.stderr` before importing MCP**
+
+Some notebook environments expose an error stream that cannot be passed directly to the subprocess launcher. In the Colab setup below, a real log file is opened and assigned to `sys.stderr` **before the MCP client module is imported**. This ensures that the imported transport code can use a file-backed diagnostic stream in the setup illustrated here.
+
+```mermaid
+flowchart TB
+    open["Open mcp_server.log"]
+    redirect["Set sys.stderr to log file"]
+    import["Import MCP client code"]
+    launch["Open stdio client connection"]
+    child["Server subprocess starts"]
+    log["Server diagnostics to log file"]
+
+    open --> redirect --> import --> launch --> child
+    child -.->|"stderr"| log
+
+    classDef input fill:#e1f5fe,stroke:#0288d1,color:#102c3b;
+    classDef process fill:#fff3e0,stroke:#f57c00,color:#54300a;
+    classDef output fill:#e8f5e9,stroke:#388e3c,color:#14361b;
+    class open input;
+    class redirect,import,launch,child process;
+    class log output;
+```
+
+The preparation cell is:
+
+```python
+import sys
+
+MCP_DIAGNOSTIC_LOG = open("mcp_server.log", "w", encoding="utf-8")
+sys.stderr = MCP_DIAGNOSTIC_LOG
+print("MCP server diagnostics will be written to mcp_server.log")
+```
+
+**Observe:** The cell only prepares the destination for diagnostic output; it does **not** launch a server or execute an MCP tool. The server starts later when its client connection opens. The redirect also changes the **notebook process's** `sys.stderr`, so Python errors that normally appear in the notebook may instead be recorded in the file. Inspect `mcp_server.log` when troubleshooting, or restart the Colab runtime to restore the original streams.
+
+**Technical distinction:** Redirecting `sys.stderr` is an environment-specific workaround, not a general MCP protocol requirement. The route taken by child-process `stderr` depends on how the client transport is configured. A transport that explicitly accepts a diagnostic file can use that file without globally replacing `sys.stderr`.
+
+</details>
+
 
 ### 3.1 Define the Time and Fetch launch configurations
 
@@ -547,14 +651,14 @@ Find `url` in the tool's `input_schema["properties"]`, then check whether `url` 
 
 #### 3.7.2 Fetch a public informational page
 
-Use `https://example.com/` as a small public demonstration page. The request is deliberately limited to a short response.
+Use `https://www.metropolia.fi/fi` as a small public demonstration page. The request is deliberately limited to a short response.
 
 ```python
 async with Client(FETCH_SERVER) as client:
     result = await client.call_tool(
         "fetch",
         {
-            "url": "https://example.com/",
+            "url": "https://www.metropolia.fi/fi",
             "max_length": 1200,
         },
     )
@@ -572,7 +676,7 @@ async with Client(FETCH_SERVER) as client:
     result = await client.call_tool(
         "fetch",
         {
-            "url": "https://example.com/",
+            "url": "https://www.metropolia.fi/fi",
             "max_length": 200,
             "start_index": 0,
         },
@@ -1006,9 +1110,21 @@ If the launch fails, check the executable path, package download, compatible env
 
 </details>
 
+
+
 ---
 
-## Step 8: Discover resources and prompts using the same MCP client
+### Concept Check: MCP Servers, Colab, and Timezones
+
+1. Reading server diagnostic logs: The MCP server writes diagnostic messages to `mcp_server.log`. How can the contents of this file be displayed in Google Colab? Write a Python code cell that reads and displays the log.
+2. Inspecting running MCP server processes: When an MCP client connects to a server using `stdio`, the server runs as a separate process. How can the running processes be inspected in Google Colab? Write a code cell or shell command that helps identify the MCP server process. What happens to that process when the client connection closes?
+3. Understanding `next_cursor` and pagination: The `list_tools()` method may return only one page of available tools. What does `next_cursor` represent? How can an MCP client use it to retrieve the remaining pages? What does `next_cursor = None` indicate?
+
+4. Understanding timezone conversion: The Time MCP server uses regional timezone identifiers such as `Europe/Helsinki` and `Asia/Tokyo`. Why are regional timezones used instead of simply converting all times to UTC or using fixed UTC offsets? How can daylight saving time affect the conversion?
+
+---
+
+## (next Week) Step 8: Discover resources and prompts using the same MCP client
 
 **Goal:** Extend the client workflow beyond tools. Use the MCP SDK to discover a resource, read its contents, discover a prompt, and retrieve a completed prompt message. No LLM or LangChain is involved.
 
@@ -1216,13 +1332,19 @@ A server need not expose all three. Check advertised capabilities before assumin
 
 ---
 
-## Step 9: Brief preview: what is inside an MCP server?
+## (next Week) Step 9: Brief preview: what is inside an MCP server?
 
 **Goal:** Connect the observable client behavior with the server implementation, without building a server in this activity.
 
 An MCP server is a program that registers capabilities and handles requests from clients. A function marked as a tool has a name, description, and argument structure that can be advertised through the protocol.
 
 The following is a **server-side code preview**, not a required execution cell. It uses the separate `fastmcp` package, which is **not** installed by the minimal client-only setup above.
+
+```python
+!!pip install fastmcp
+```
+
+> **Server preview only: not executed in this activity.**
 
 ```python
 # Server preview only: not executed in this activity.

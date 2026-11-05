@@ -2,7 +2,6 @@
 
 
 
-
 ## Morning: Model Context Protocol (MCP)
 
 - Theory
@@ -37,25 +36,19 @@
 -  Sprint 1 Presentations: Jigsaw Challenge
   - [Sprint 1: Jigsaw Breakout-Room Instructions](./material/sprint1_br_instructions.md)
   - [Jigsaw Voting Guide](./material/sprint1_voting_guide.md)
-   [Jigsaw Scoring](./material/sprint1_scoring.md)
+  - [Jigsaw Scoring](./material/sprint1_scoring.md)
 
 
 ### Sprint 2 Planning
 
-After the Jigsaw Challenge, we return to  **original breakout rooms** to begin Sprint 2 planning.
-
-[Sprint 2 Planning Instructions](./material/sprint2-planning.md)
-
-Each group should:
-
-- Review feedback and lessons learned from Sprint 1.
-- Update and prioritize the Product Backlog.
-- Define a clear Sprint 2 Goal.
-- Select Sprint 2 Backlog Items and divide them into implementation tasks.
-- Assign responsibilities and identify important risks and dependencies.
-- Plan the next working increment, including MCP client/server integration, Streamlit GUI, and function unit tests.
-
-**Reminder:** Sprint 2 builds on Sprint 1. Existing functionality should be preserved and improved. The Sprint 2 Review will take place in the afternoon of Week 5.
+- [Sprint 2 Planning Instructions](./material/sprint2-planning.md)
+  - Review feedback and lessons learned from Sprint 1.
+  - Update and prioritize the Product Backlog.
+  - Define a clear Sprint 2 Goal.
+  - Select Sprint 2 Backlog Items and divide them into implementation tasks.
+  - Assign responsibilities and identify important risks and dependencies.
+  - Plan the next working increment, including MCP client/server integration, Streamlit GUI, and function unit tests.
+  - **Reminder:** Sprint 2 builds on Sprint 1. Existing functionality should be preserved and improved. The Sprint 2 Review will take place in the afternoon of Week 5.
 
 
 

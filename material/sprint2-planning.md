@@ -1,10 +1,5 @@
 # Sprint 2 Planning
 
-Join the **original project group's Zoom breakout room** for Sprint 2 planning. Review the Sprint 1 results, presentation feedback, and shared Jigsaw findings. Use that evidence to agree on a realistic Sprint 2 plan.
-
-Complete the six items below together and record the decisions in the shared project documentation.
-
-## Minimum planning requirements
 
 1. **Sprint Goal**
 

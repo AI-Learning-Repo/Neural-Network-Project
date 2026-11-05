@@ -2,6 +2,7 @@
 
 
 
+
 ## Morning: Model Context Protocol (MCP)
 
 - Theory
@@ -30,13 +31,16 @@
 >   - **Best Concept Connectors:** Select **two groups** from your room, excluding your own group.
 >   - **Important:** Vote only for groups represented in your breakout room. Please remember their group numbers to avoid voting mistakes.
 
+### Sprint 1 Review 
 
 - Mock Zoom Poll
 -  Sprint 1 Presentations: Jigsaw Challenge
   - [Sprint 1: Jigsaw Breakout-Room Instructions](./material/sprint1_br_instructions.md)
   - [Jigsaw Voting Guide](./material/sprint1_voting_guide.md)
    [Jigsaw Scoring](./material/sprint1_scoring.md)
-- Sprint 2 Planning
+
+
+### Sprint 2 Planning
 
 After the Jigsaw Challenge, we return to  **original breakout rooms** to begin Sprint 2 planning.
 

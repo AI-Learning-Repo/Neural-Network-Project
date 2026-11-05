@@ -2,6 +2,7 @@
 
 
 
+
 ## Morning: Model Context Protocol (MCP)
 
 - Theory
@@ -42,6 +43,7 @@
 ### Sprint 2 Planning
 
 - [Sprint 2 Planning Instructions](./material/sprint2-planning.md)
+- In Brief:
   - Review feedback and lessons learned from Sprint 1.
   - Update and prioritize the Product Backlog.
   - Define a clear Sprint 2 Goal.

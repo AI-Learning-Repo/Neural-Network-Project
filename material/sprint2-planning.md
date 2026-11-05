@@ -25,8 +25,8 @@
 
 4. **Timeline and Milestones**
 
-   - **Week 3:** Begin MCP client/server development and investigate integration into the existing assistant.
-   - **Week 4:** Complete MCP integration, Streamlit functionality, and testing.
+   - **Week 3:** Investigate MCP client/server integration into the existing assistant.
+   - **Week 4:** Begin MCP integration, Streamlit functionality, and testing.
    - **Week 5:** Finalize integration, conduct evaluation, fix important issues, and prepare the Sprint 2 demonstration and presentation.
 
    Adjust the work sequence to the project's needs while keeping the planned scope realistic.

@@ -1,30 +1,30 @@
 # Sprint 1: Online Jigsaw Challenge: Format, Voting, and Scoring
 
 
-All presentations, technical discussions, voting, and planning take place online in Zoom. Participants move between the main Zoom room and assigned breakout rooms; no on-campus attendance is required.
+All presentations, technical discussions, voting, and planning take place online in Zoom. Join the main Zoom room and move to the assigned breakout rooms when directed. No on-campus attendance is required.
 
 Keep presentation files, the demonstration application, and relevant test results ready for screen sharing. If screen sharing or a connection fails, notify the instructor and describe the available evidence and limitation. Rejoin Zoom after a disconnection and request help returning to the assigned room.
 
 ## 1. Purpose
 
-The Jigsaw Challenge is an opportunity to **demonstrate the project group's Sprint 1 AI assistant or agent, discuss technical decisions, and learn from other project groups**. The activity combines a working-product presentation with discussion of Qwen, tools, databases, external APIs, evaluation, and Scrum.
+Use the Jigsaw Challenge to **demonstrate the project group's Sprint 1 AI assistant or agent, discuss technical decisions, and learn from other project groups**. The activity combines a working-product presentation with discussion of Qwen, tools, databases, external APIs, evaluation, and Scrum.
 
-Each participant has two responsibilities:
+Complete both roles during the session:
 
-- **Presenter:** explain and demonstrate the work of their own project group, including what worked, what did not work, and what was learned.
-- **Active listener:** ask substantive technical questions, take notes, and identify ideas that could improve their own project.
+- **Presenter:** Explain and demonstrate the project being represented, including what worked, what did not work, and what was learned.
+- **Active listener:** Ask substantive technical questions, take notes, and identify ideas to bring back to the original project team.
 
 A well-explained limitation or failed experiment is useful evidence of technical understanding. The Jigsaw is a learning activity as well as a competition.
 
 ## 2. How the online Jigsaw will work
 
-1. **Preparation:** Each project group prepares its Sprint 1 presentation and ensures that every member can explain the complete project and demonstrate the working assistant.
-2. **Mixed-group breakout rooms:** Students join assigned Zoom breakout rooms, normally with **four representatives from four different project groups**. At the start, everyone states their name and project group number.
-3. **Presentations and technical discussion:** Each representative presents the group's Sprint 1 work (approximately **10–12 minutes**) and answers technical questions. Allow roughly **15 minutes per representative**, including questions, unless the instructor announces a different schedule.
-4. **Collaborative learning task:** Before leaving the mixed-group room, participants agree on **one interesting tool integration, one evaluation lesson, one technical limitation, and one improvement worth adopting**. Everyone records the four outcomes.
-5. **Main room and voting:** All Jigsaw breakout rooms close. Students return to the main Zoom room and answer the two poll questions described below.
+1. **Prepare with the project team:** Prepare the Sprint 1 presentation together. Practise explaining the complete project and demonstrating the working assistant so that every member is ready to represent the group.
+2. **Join the assigned mixed-group room:** The room normally contains **four representatives from four different project groups**. Introduce each representative by name and project group number, record the group list, and agree on presentation order.
+3. **Present and discuss:** Present the Sprint 1 work for approximately **10–12 minutes** and answer technical questions. Allow roughly **15 minutes per representative**, including questions, unless a different schedule is announced. Ask at least one substantive technical question during the session.
+4. **Complete the collaborative task:** Before leaving the room, agree on **one interesting tool integration, one evaluation lesson, one technical limitation, and one improvement worth adopting**. Keep an individual copy of all four findings.
+5. **Return and vote:** When the Jigsaw breakout rooms close, return to the main Zoom room and answer the two poll questions below. Check every selection against the recorded room list.
 6. **Results and showcase:** The instructor checks eligible votes, calculates **normalized group scores**, and identifies the winning project group. The leading one or two groups may present to the whole class in the main Zoom room if time allows.
-7. **Sprint 2 planning:** Students return to **their own original project groups** in breakout rooms. They use the feedback and lessons from the Jigsaw to review the Product Backlog, define their Sprint 2 Goal, and begin Sprint 2 planning.
+7. **Plan Sprint 2:** Join the **original project group's breakout room**. Bring the shared findings, review the Product Backlog, and agree on the Sprint 2 Goal and plan.
 
 **During presentations and technical defenses, explain the project independently; do not use live AI assistance.**
 
@@ -38,15 +38,15 @@ The same **seven project groups** will appear as choices in both questions, even
 >
 > Consider the working AI assistant, technical explanation, demonstration, evaluation, Scrum process, and answers to questions.
 
-**Choose one other group that actually presented in the assigned room. Exclude the participant's own project group.**
+**Choose one other group that actually presented in the assigned room. Exclude the project group being represented in this session.**
 
 ### Question 2: Concept Connectors (choose exactly two)
 
 > **Which TWO project groups were represented by the strongest Concept Connectors in the assigned Jigsaw breakout room?**
 >
-> Recognize students whose questions or contributions connected course concepts, clarified technical choices, uncovered limitations, or helped others understand the projects.
+> Consider representatives whose questions or contributions connected course concepts, clarified technical choices, uncovered limitations, or helped others understand the projects.
 
-**Choose two distinct other groups represented in the assigned room. Exclude the participant's own project group and groups absent from that room.**
+**Choose two distinct other groups represented in the assigned room. Exclude the project group being represented in this session and groups absent from that room.**
 
 The poll answer choices will be **Group 1** through **Group 7**. One representative per project group is assigned to each mixed-group room; therefore, selecting a group identifies that room's representative.
 
@@ -129,3 +129,10 @@ The winning group may receive recognition badges. **Jigsaw competition scores do
 After the Jigsaw, join the **original project team's Zoom breakout room** for Sprint 2 planning. Discuss which ideas or improvements to take forward. Update the Product Backlog, identify what should remain working from Sprint 1, and plan the Sprint 2 increment: **MCP client/server integration, Streamlit GUI, and function unit tests**, alongside the existing product functionality and assistant evaluation.
 
 The Jigsaw findings provide concrete input for the team's next sprint.
+
+
+## Session guides
+
+- [Breakout-room tasks and record sheet](./sprint1_br_instructions_student.md)
+- [Voting checklist](./sprint1_voting_guide_student.md)
+- [Sprint 2 planning requirements](./sprint2-planning_student.md)

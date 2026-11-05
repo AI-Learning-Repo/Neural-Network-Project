@@ -1,8 +1,8 @@
 # Sprint 2 Planning
 
-Planning takes place in each original project group's Zoom breakout room. Use the Sprint 1 results, feedback, and shared Jigsaw findings to review the Product Backlog and agree on a realistic Sprint 2 plan.
+Join the **original project group's Zoom breakout room** for Sprint 2 planning. Review the Sprint 1 results, presentation feedback, and shared Jigsaw findings. Use that evidence to agree on a realistic Sprint 2 plan.
 
-Record the following six planning requirements in the group's shared project documentation.
+Complete the six items below together and record the decisions in the shared project documentation.
 
 ## Minimum planning requirements
 
@@ -26,7 +26,7 @@ Record the following six planning requirements in the group's shared project doc
    - Break selected backlog items into manageable implementation tasks.
    - Identify the team members responsible for each task.
    - Provide rough estimates and identify dependencies.
-   - Ensure that all team members contribute to technical development.
+   - Assign technical development work to every team member.
 
 4. **Timeline and Milestones**
 
@@ -34,7 +34,7 @@ Record the following six planning requirements in the group's shared project doc
    - **Week 4:** Complete MCP integration, Streamlit functionality, and testing.
    - **Week 5:** Finalize integration, conduct evaluation, fix important issues, and prepare the Sprint 2 demonstration and presentation.
 
-   Teams may organize the work differently, provided the planned scope is realistic.
+   Adjust the work sequence to the project's needs while keeping the planned scope realistic.
 
 5. **Acceptance Criteria and Evaluation**
 

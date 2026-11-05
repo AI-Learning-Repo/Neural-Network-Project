@@ -2,20 +2,20 @@
 
 Read this guide immediately before answering the Zoom poll.
 
-Voting takes place after all mixed-group Jigsaw breakout rooms close and participants return to the **main Zoom room**.
+Return to the **main Zoom room** after the mixed-group Jigsaw breakout rooms close. Complete the poll there after all presentations.
 
 ## 1. Check the room list before voting
 
 Record the project group numbers represented in the assigned mixed-group room:
 
-- **Participant's project group:** `[Group #]`
+- **Project group represented:** `[Group #]`
 - **Other group 1:** `[Group #]`
 - **Other group 2:** `[Group #]`
 - **Other group 3:** `[Group #]`
 
 If the room had fewer than four participants, list only the groups actually represented.
 
-The poll lists **Group 1 through Group 7**. Only groups represented by **other students in the participant's assigned Jigsaw room** are eligible. The participant's own project group is ineligible.
+The poll lists **Group 1 through Group 7**. Select only groups presented by **other representatives in the assigned Jigsaw room**. Exclude the project group listed above as **Project group represented**.
 
 ## 2. Zoom poll question 1: Best Presentation
 
@@ -25,7 +25,7 @@ The poll lists **Group 1 through Group 7**. Only groups represented by **other s
 >
 > Consider clarity, a working assistant or agent, the demonstration, tool/database/API integration, evaluation, Scrum explanation, and answers to technical questions.
 
-Choose one eligible group whose presentation was observed in the assigned room.
+Choose one eligible group based on the presentations heard in the assigned room.
 
 ## 3. Zoom poll question 2: Concept Connectors
 
@@ -39,11 +39,11 @@ Choose two eligible groups represented in that room. A useful question can contr
 
 ## 4. Final check before submitting
 
-- [ ] Exactly **one group** is selected for Best Presentation.
-- [ ] Exactly **two distinct groups** are selected for Concept Connectors.
-- [ ] Every selected group had a representative in the assigned Jigsaw room.
-- [ ] The participant's own project group is excluded from both questions.
-- [ ] Each selected group number matches the room record.
+- [ ] Select exactly **one group** for Best Presentation.
+- [ ] Select exactly **two distinct groups** for Concept Connectors.
+- [ ] Check that every selected group had a representative in the assigned Jigsaw room.
+- [ ] Exclude the project group being represented in this session from both questions.
+- [ ] Compare every selected group number with the room record.
 
 If fewer than two other groups are eligible, inform the instructor rather than selecting an absent group. Report a mistake promptly if it is discovered after submission.
 
@@ -70,3 +70,9 @@ Submit votes independently and check eligibility carefully. The purpose is to re
 ## 7. After the poll
 
 After the results and any finalist presentations in the main Zoom room, join the **original project group's Zoom breakout room** for Sprint 2 planning. Use the Jigsaw findings to review the Product Backlog and plan the next working increment.
+
+
+## Related instructions
+
+- [Full format and scoring example](./sprint1_scoring_student.md)
+- [Sprint 2 planning](./sprint2-planning_student.md)

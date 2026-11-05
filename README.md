@@ -1,6 +1,7 @@
 # Schedule
 
 
+
 ## Morning: Model Context Protocol (MCP)
 
 - Theory

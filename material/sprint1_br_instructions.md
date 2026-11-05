@@ -2,14 +2,14 @@
 
 Read these instructions before the presentations begin.
 
-The Sprint 1 presentations take place **online in Zoom**. Each assigned mixed-group breakout room normally contains four students, each representing a different project group. Participants present their projects, ask technical questions, and complete a short collaborative reflection before returning to the main Zoom room.
+The Sprint 1 presentations take place **online in Zoom**. Each assigned mixed-group breakout room normally contains four students, each representing a different project group. Present the project, ask technical questions about other projects, and complete the shared reflection before returning to the main Zoom room.
 
 ## 1. Identify the room and its representatives
 
 At the start of the session:
 
 1. Confirm the assigned **Zoom breakout-room number or name**.
-2. State a name and **project group number** during introductions.
+2. Begin the introduction with a name and **project group number**.
 3. Record the name and group number of each participant.
 4. Keep the room's group list available for voting after the presentations.
 5. Agree on the presentation order and appoint a timekeeper.
@@ -24,7 +24,7 @@ Complete this record before the first presentation:
 | `[Name]` | `[Group #]` | ☐ | |
 
 **Jigsaw room:** `[Room number / name]`  
-**Participant's project group:** `[Group number]`
+**Project group represented:** `[Group number]`
 
 The main-room poll lists all seven project groups. Eligibility depends on the groups represented in the assigned breakout room, so a written record is required.
 
@@ -37,7 +37,7 @@ Allow approximately **15 minutes per student**:
 
 ### Presenter responsibilities
 
-- State a name and **project group number** again at the beginning.
+- Begin the presentation by repeating the presenter name and **project group number**.
 - Explain the user problem, Sprint Goal, and working AI assistant or agent.
 - Use Zoom screen sharing to show the presentation, demonstration, and relevant results. Keep the required files and application ready before the presentation slot.
 - Show meaningful tool usage, database integration, and API integration where feasible.
@@ -67,7 +67,7 @@ If screen sharing or a connection fails, notify the instructor and explain the a
 
 ## 3. Required collaborative learning task
 
-After all presentations and technical questions, remain in the mixed-group breakout room for a few minutes. Agree on **one shared answer to each of the four prompts** below. Every participant records the findings before returning to the main room.
+After all presentations and technical questions, remain in the mixed-group breakout room for a few minutes. Agree on **one shared answer to each of the four prompts** below. Keep an individual copy of the agreed findings before returning to the main room.
 
 | Prompt | Room's shared finding |
 |---|---|
@@ -82,21 +82,21 @@ If the breakout room closes before discussion is complete, retain the findings a
 
 ## 4. Before returning to the main Zoom room
 
-- [ ] All participants introduced themselves and identified their **project group number**.
-- [ ] Each participant recorded **all groups represented in the room**.
-- [ ] Every representative had an opportunity to present and answer questions.
-- [ ] Each participant asked **at least one meaningful technical question**.
-- [ ] The room discussed and recorded **all four collaborative learning findings**.
-- [ ] Each participant identified the other eligible groups: normally three in a room representing four different groups.
-- [ ] All participants understand that voting takes place after returning to the main room.
+- [ ] Complete introductions with presenter names and **project group numbers**.
+- [ ] Record **all groups represented in the room**.
+- [ ] Allow every representative to present and answer questions.
+- [ ] Ask **at least one meaningful technical question**.
+- [ ] Discuss all four collaborative prompts and keep a copy of the shared findings.
+- [ ] Identify the other eligible groups: normally three in a room representing four different groups.
+- [ ] Return to the main Zoom room before answering the poll.
 
 ## 5. Voting eligibility and accuracy
 
-The instructor runs **one Zoom poll with all seven project groups** as answer choices. Eligibility is restricted to groups represented by **other students in the participant's assigned Jigsaw room**.
+Answer the poll in the main Zoom room. It lists **all seven project groups**, but only groups presented by **other representatives in the assigned Jigsaw room** are eligible.
 
 - Select **one other group** for *Best Presentation*.
 - Select **two distinct other groups** for *Concept Connectors*.
-- Exclude the participant's own project group.
+- Exclude the project group being represented in this session.
 - Exclude groups that had no representative in the assigned room.
 
 The selections determine normalized competition scores. An ineligible selection can affect the ranking and may be invalidated after the instructor checks the room assignments. Compare every selected group number with the room record before submitting.
@@ -107,6 +107,13 @@ Individual responses are confidential among classmates. The instructor may inspe
 
 ## 6. After voting
 
-The instructor calculates normalized group scores and may invite the leading one or two groups to present to the whole class in the **main Zoom room**. Participants then join their **original project group's Zoom breakout room** for **Sprint 2 planning**.
+The instructor calculates normalized group scores and may invite the leading one or two groups to present to the whole class in the **main Zoom room**. After the results and any finalist presentations, join the **original project group's Zoom breakout room** for **Sprint 2 planning**.
 
 Bring the four shared Jigsaw findings to the planning discussion. Identify ideas that could improve the existing assistant as the project adds **MCP client/server integration, Streamlit, and function unit testing** in Sprint 2.
+
+
+## Related instructions
+
+- [Voting guide](./sprint1_voting_guide_student.md)
+- [Format and scoring](./sprint1_scoring_student.md)
+- [Sprint 2 planning](./sprint2-planning_student.md)

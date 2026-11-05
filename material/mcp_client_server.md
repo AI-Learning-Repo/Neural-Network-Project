@@ -224,7 +224,7 @@ sequenceDiagram
         Note over Client,Server: Client checks selected revision
         Client->>Server: notifications/initialized
     end
-    Note over Client,Server: Continue only if compatible; otherwise report failure
+    Note over Client,Server: Continue only if compatible, otherwise report failure
     Client->>Server: tools/list
     Server-->>Client: Individual tool definitions
     Client->>Server: tools/call with name and arguments

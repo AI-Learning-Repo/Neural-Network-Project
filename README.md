@@ -1,10 +1,7 @@
 # Schedule
 
 
-
 ## Morning: Model Context Protocol (MCP)
-
-**Topic:** Understanding MCP Clients: Why a Common Tool Protocol Matters
 
 - Theory
   - [Model Context Protocol (MCP): Connecting AI Applications to Tools and Data](./material/theory.md)
@@ -12,6 +9,13 @@
 - [Demo / Activity 1](./material/activity1.md)
 - Activity 2: [Part A](./material/activity2a.md), [Part B](./material/activity2b.md)
 - [Week 2 Homework Solution](./material/w2-homework-sol.md)
+
+---
+
+## Homework:
+
+- [The Ultimate MCP Crash Course - Build From Scratch](https://youtu.be/ZoZxQwp1PiM)
+- [MCP Security Fundamentals Course](https://youtu.be/gYXLRMycVMk)
 
 ---
 

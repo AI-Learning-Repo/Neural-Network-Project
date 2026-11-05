@@ -30,10 +30,9 @@ The main-room poll lists all seven project groups. Eligibility depends on the gr
 
 ## 2. Presentations and technical questions
 
-Allow approximately **15 minutes per student**:
 
 - **10–12 minutes** to present the Sprint 1 project, demonstrate the assistant, and explain results.
-- The remaining time for **technical questions and answers**.
+- T**15–20 minutes** for technical questions and answers.
 
 ### Presenter responsibilities
 

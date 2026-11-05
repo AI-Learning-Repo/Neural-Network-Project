@@ -20,7 +20,7 @@ A well-explained limitation or failed experiment is useful evidence of technical
 
 1. **Prepare with the project team:** Prepare the Sprint 1 presentation together. Practise explaining the complete project and demonstrating the working assistant so that every member is ready to represent the group.
 2. **Join the assigned mixed-group room:** The room normally contains **four representatives from four different project groups**. Introduce each representative by name and project group number, record the group list, and agree on presentation order.
-3. **Present and discuss:** Present the Sprint 1 work for approximately **10–12 minutes** and answer technical questions. Allow roughly **15 minutes per representative**, including questions, unless a different schedule is announced. Ask at least one substantive technical question during the session.
+3. **Present and discuss:** Present the Sprint 1 work and answer technical questions. Ask at least one substantive technical question during the session.
 4. **Complete the collaborative task:** Before leaving the room, agree on **one interesting tool integration, one evaluation lesson, one technical limitation, and one improvement worth adopting**. Keep an individual copy of all four findings.
 5. **Return and vote:** When the Jigsaw breakout rooms close, return to the main Zoom room and answer the two poll questions below. Check every selection against the recorded room list.
 6. **Results and showcase:** The instructor checks eligible votes, calculates **normalized group scores**, and identifies the winning project group. The leading one or two groups may present to the whole class in the main Zoom room if time allows.

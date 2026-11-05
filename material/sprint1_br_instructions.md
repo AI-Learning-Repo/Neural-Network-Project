@@ -32,7 +32,7 @@ The main-room poll lists all seven project groups. Eligibility depends on the gr
 
 
 - **10–12 minutes** to present the Sprint 1 project, demonstrate the assistant, and explain results.
-- T**15–20 minutes** for technical questions and answers.
+- **15–20 minutes** for technical questions and answers.
 
 ### Presenter responsibilities
 

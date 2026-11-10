@@ -8,7 +8,7 @@ Allow Groq-hosted Qwen to select tools discovered from existing MCP servers thro
 
 ### Starting point and how to use this part
 
-Part A connected to Time, Filesystem, and OpenStreetMap MCP servers, discovered their tools, converted them into LangChain tools with `MCPAdapter`, and invoked those tools directly using `.ainvoke()`. Python explicitly chose every tool. Run Part A first to create the shared configuration, then run Steps 4–5 below in order in the same notebook. No other earlier activity is needed. Step 6 is an implementation assignment with model-loading and execution helpers supplied here; the homework requires implementing the parser and bounded agent loop. The next step introduces **model-selected requests** while preserving the same server implementations.
+Part A connected to Time, Filesystem, and OpenStreetMap MCP servers, discovered their tools, converted them into LangChain tools with `MCPAdapter`, and invoked those tools directly using `.ainvoke()`. Python explicitly chose every tool. Run [Part A](./activity2a_fixed.md) first to create the shared configuration, then run Steps 4–5 below in order in the same notebook. No other earlier activity is needed. Step 6 is an implementation assignment with model-loading and execution helpers supplied here; the homework requires implementing the parser and bounded agent loop. The next step introduces **model-selected requests** while preserving the same server implementations.
 
 ```mermaid
 flowchart LR
@@ -42,6 +42,49 @@ Install the model integration libraries in a new code cell:
 ```python
 %pip -q install -U "langchain[mcp]>=1.4.0,<2" langchain-groq groq openai uv
 ```
+
+### Notebook compatibility: subprocess output streams
+
+Run this cell **before the first import of `langchain.mcp`, `fastmcp`, or `mcp`**. Some Colab/Jupyter streams raise `UnsupportedOperation: fileno` when a subprocess launcher requests a real file descriptor. The conditional wrapper below keeps notebook `write()` and `flush()` behavior and supplies a checked OS descriptor only when needed. It leaves streams with working descriptors unchanged.
+
+```python
+import os
+import sys
+
+
+class NotebookSubprocessStream:
+    """Keep notebook output while exposing a real subprocess descriptor."""
+
+    def __init__(self, stream, fallback_fd):
+        self._stream = stream
+        self._fallback_fd = fallback_fd
+
+    def fileno(self):
+        # Subprocess redirection needs an OS descriptor, not a made-up value.
+        os.fstat(self._fallback_fd)
+        return self._fallback_fd
+
+    def __getattr__(self, name):
+        return getattr(self._stream, name)
+
+
+def prepare_notebook_streams():
+    for name, fallback_fd in (("stdout", 1), ("stderr", 2)):
+        stream = getattr(sys, name)
+        try:
+            os.fstat(stream.fileno())
+        except (AttributeError, OSError, TypeError, ValueError):
+            if stream is None:
+                raise RuntimeError(f"sys.{name} is unavailable")
+            os.fstat(fallback_fd)
+            setattr(sys, name, NotebookSubprocessStream(stream, fallback_fd))
+
+
+prepare_notebook_streams()
+print("Notebook streams are ready for MCP subprocesses.")
+```
+
+Some MCP releases capture `sys.stderr` when imported. If MCP was already imported before this cell and the error persists, restart the runtime, reinstall the dependencies, and run this compatibility cell before the MCP imports. Do not substitute a fictitious descriptor or permanently replace notebook output with a plain console stream. Child-process diagnostics may appear in the runtime console rather than the cell.
 
 Confirm the prerequisite module:
 
@@ -159,6 +202,8 @@ async with MCPAdapter(TRIP_CONFIG) as adapter:
 ```
 
 **Observe:** There is a difference between a server publishing a tool, an application discovering it, and an agent authorizing the model to request it.
+
+This block uses the combined three-server `TRIP_CONFIG`, so its allowlist deliberately uses names such as `time_get_current_time` and `osm_geocode`. The unprefixed single-server lookups from Part A must not be copied into this allowlist. If a required prefixed name is absent, stop and inspect the combined catalog; do not broaden the allowlist to arbitrary suffix matches.
 
 **Question:** Why exclude Filesystem tools from `safe_tools` instead of only telling the model not to write files?
 
@@ -586,6 +631,7 @@ remote_client = OpenAI(
 
 remote_result = remote_client.responses.create(
     model=GROQ_MODEL,
+    max_output_tokens=1024,
     input=(
         "Use the connected MCP documentation search tool to find what "
         "LangChain MCPAdapter does. Give a concise explanation."
@@ -602,10 +648,15 @@ remote_result = remote_client.responses.create(
 )
 
 print("Remote response ID:", remote_result.id)
+print("Response status:", remote_result.status)
+print("Incomplete details:", remote_result.incomplete_details)
+print("Final text preview:", remote_result.output_text[:1500])
 for item in remote_result.output:
     print("OUTPUT TYPE:", item.type)
-    print("DETAIL:", str(item)[:1200])
+    print("DETAIL PREVIEW:", str(item)[:600])
 ```
+
+`max_output_tokens=1024` bounds generated output, including reasoning tokens; it does not cap fetched MCP payloads or the number of tool calls. Printed details are separately shortened for notebook readability. If the response is incomplete, inspect `incomplete_details`; a token-limited response is not a completed answer. Increase the budget deliberately when the task needs more output.
 
 **Observe:** Check the output for an actual MCP call and its outcome, rather than relying on the final text alone. The documentation server also exposes other operations; only its named search tool is allowed here. In this separate example, the Groq platform is responsible for contacting the remote MCP server and performing discovery and tool execution. The `allowed_tools` setting limits exposure to a read-only documentation search. `require_approval="never"` is used only because the example tool is intended to be read-only; sensitive or state-changing tools require a different approval policy.
 
@@ -955,6 +1006,9 @@ Include one deliberately malformed or unsupported tool request and show how the 
 The MCP protocol separates tool consumers from tool providers. An MCP server defines and implements a tool; an MCP client discovers it and requests execution. LangChain can adapt discovered MCP tools into a common interface, while a language model selects which operations to request. Groq's native remote-MCP support demonstrates that LangChain is not required when a model platform provides its own compatible orchestration. The same MCP-enabled tool layer can also serve a locally running model when its tool-request format and execution loop are handled correctly. The distinction between consuming a server and implementing one is independent of which model selects its tools.
 
 ## References
+
+- [Groq Responses API: output token limit and response status](https://console.groq.com/docs/api-reference)
+- [Python MCP SDK: notebook subprocess `fileno` issue](https://github.com/modelcontextprotocol/python-sdk/issues/1103)
 
 - [LangChain: MCP integration and `MCPAdapter`](https://docs.langchain.com/oss/python/langchain/mcp)
 - [LangChain: MCP tools](https://docs.langchain.com/oss/python/langchain/mcp/tools)

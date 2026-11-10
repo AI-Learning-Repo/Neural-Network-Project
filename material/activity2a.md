@@ -63,6 +63,49 @@ The `langchain.mcp` namespace provides `MCPAdapter` and integrates with FastMCP.
 
 The Python MCP SDK also supports direct client calls. This activity uses LangChain as an **additional application layer**, not as a requirement of the MCP protocol.
 
+### Notebook compatibility: subprocess output streams
+
+Run this cell **before the first import of `langchain.mcp`, `fastmcp`, or `mcp`**. Some Colab/Jupyter streams raise `UnsupportedOperation: fileno` when a subprocess launcher requests a real file descriptor. The conditional wrapper below keeps notebook `write()` and `flush()` behavior and supplies a checked OS descriptor only when needed. It leaves streams with working descriptors unchanged.
+
+```python
+import os
+import sys
+
+
+class NotebookSubprocessStream:
+    """Keep notebook output while exposing a real subprocess descriptor."""
+
+    def __init__(self, stream, fallback_fd):
+        self._stream = stream
+        self._fallback_fd = fallback_fd
+
+    def fileno(self):
+        # Subprocess redirection needs an OS descriptor, not a made-up value.
+        os.fstat(self._fallback_fd)
+        return self._fallback_fd
+
+    def __getattr__(self, name):
+        return getattr(self._stream, name)
+
+
+def prepare_notebook_streams():
+    for name, fallback_fd in (("stdout", 1), ("stderr", 2)):
+        stream = getattr(sys, name)
+        try:
+            os.fstat(stream.fileno())
+        except (AttributeError, OSError, TypeError, ValueError):
+            if stream is None:
+                raise RuntimeError(f"sys.{name} is unavailable")
+            os.fstat(fallback_fd)
+            setattr(sys, name, NotebookSubprocessStream(stream, fallback_fd))
+
+
+prepare_notebook_streams()
+print("Notebook streams are ready for MCP subprocesses.")
+```
+
+Some MCP releases capture `sys.stderr` when imported. If MCP was already imported before this cell and the error persists, restart the runtime, reinstall the dependencies, and run this compatibility cell before the MCP imports. Do not substitute a fictitious descriptor or permanently replace notebook output with a plain console stream. Child-process diagnostics may appear in the runtime console rather than the cell.
+
 Run this version check after installation and keep its output with the notebook:
 
 ```python
@@ -221,9 +264,21 @@ async with MCPAdapter(TIME_CONFIG) as adapter:
 
 **Observe:** The returned objects are LangChain tools. The adapter has contacted an MCP server and converted the discovered tool metadata into LangChain's standard tool interface.
 
-When several servers are configured, LangChain uses server-name prefixes to distinguish the origins of tools. With this configuration, the expected names are `time_get_current_time` and `time_convert_time`. Use the **actual discovered names** when a package version reports a different naming convention.
+A single-server configuration can expose the original names `get_current_time` and `convert_time`, without a `time_` prefix. A `mcpServers` dictionary alone does not guarantee prefixes for a single server. Multi-server configurations normally namespace tools by server. Inspect the names returned by discovery.
 
-The single-server configurations here are still `mcpServers` dictionaries, so the adapter prefixes tools with their configuration keys even when only one server is present. The cells use those expected names and will raise `KeyError` if discovery differs. If that happens, inspect the catalog and update the names consistently before continuing.
+Run this helper cell before the remaining Part A examples. It resolves either exact naming form for a **single-server** catalog and rejects missing or ambiguous matches. It does not rename tools or guess from arbitrary suffixes.
+
+```python
+def get_single_server_tool(tools, server_name, operation):
+    candidates = (operation, f"{server_name}_{operation}")
+    matches = [tools[name] for name in candidates if name in tools]
+    if len(matches) != 1:
+        raise LookupError(
+            f"Expected exactly one of {candidates}; "
+            f"discovered: {sorted(tools)}"
+        )
+    return matches[0]
+```
 
 The [adapter lifecycle documentation](https://docs.langchain.com/oss/python/langchain/mcp/connections) describes reentrant tools that can reopen their client after discovery. These examples keep discovery and invocation in the same context to hold one connection while the cell runs.
 
@@ -235,7 +290,7 @@ from trip_mcp_config import TIME_CONFIG
 
 async with MCPAdapter(TIME_CONFIG) as adapter:
     tools = {item.name: item for item in await adapter.list_tools()}
-    time_tool = tools["time_get_current_time"]
+    time_tool = get_single_server_tool(tools, "time", "get_current_time")
 
     result = await time_tool.ainvoke({
         "timezone": "Europe/Helsinki"
@@ -256,7 +311,7 @@ async with MCPAdapter(TIME_CONFIG) as adapter:
     tools = {item.name: item for item in await adapter.list_tools()}
 
     try:
-        result = await tools["time_get_current_time"].ainvoke({})
+        result = await get_single_server_tool(tools, "time", "get_current_time").ainvoke({})
         print("Tool returned:", result)
     except Exception as exc:
         print("Validation or execution exception:", type(exc).__name__)
@@ -308,7 +363,7 @@ async with MCPAdapter(FILES_CONFIG) as adapter:
     for name in sorted(files_tools):
         print(" ", name)
 
-    allowed = await files_tools["files_list_allowed_directories"].ainvoke({})
+    allowed = await get_single_server_tool(files_tools, "files", "list_allowed_directories").ainvoke({})
     print("\nAllowed directories:", allowed)
 ```
 
@@ -331,13 +386,13 @@ note_text = (
 async with MCPAdapter(FILES_CONFIG) as adapter:
     tools = {item.name: item for item in await adapter.list_tools()}
 
-    written = await tools["files_write_file"].ainvoke({
+    written = await get_single_server_tool(tools, "files", "write_file").ainvoke({
         "path": note_path,
         "content": note_text,
     })
     print("Write result:", str(written)[:500])
 
-    read_back = await tools["files_read_text_file"].ainvoke({
+    read_back = await get_single_server_tool(tools, "files", "read_text_file").ainvoke({
         "path": note_path
     })
     print("\nRead result:", str(read_back)[:1000])
@@ -347,13 +402,13 @@ async with MCPAdapter(FILES_CONFIG) as adapter:
 
 ### 2.3 Optional guardrail check
 
-Inspect the `files_write_file` input schema and explain why a path outside `TRIP_DIR` should be rejected. This is a reasoning check; no outside-directory write is needed. Distinguish the input schema, which describes a path string, from the server's runtime path restriction.
+Inspect the discovered `write_file` input schema and explain why a path outside `TRIP_DIR` should be rejected. This is a reasoning check; no outside-directory write is needed. Distinguish the input schema, which describes a path string, from the server's runtime path restriction.
 
 **Concept checks:**
 
 1. Why does the Filesystem server need an allowed-directory configuration?
 2. Which operations are read-only, and which can change state?
-3. Why would automatically exposing `files_write_file` to an LLM require additional safeguards or approval?
+3. Why would automatically exposing the Filesystem `write_file` tool to an LLM require additional safeguards or approval?
 4. What happens to the temporary file when Colab resets its runtime?
 
 <details>
@@ -405,9 +460,9 @@ async with MCPAdapter(OSM_CONFIG) as adapter:
         print(json.dumps(tool.args, indent=2, ensure_ascii=False))
 ```
 
-**Expected scope:** The OpenStreetMap server publishes the four configured tools, normally named `osm_geocode`, `osm_find_nearby_pois`, `osm_route`, and `osm_optimize_route` after prefixing. Check the discovered names before the next calls.
+**Expected scope:** This single-server catalog should expose `geocode`, `find_nearby_pois`, `route`, and `optimize_route`, possibly with an `osm_` prefix depending on the adapter version. The helper accepts either exact form. The combined three-server catalog later normally uses `osm_` names to preserve origin information.
 
-**Question:** Does listing these tools retrieve coordinates or a route? What should happen if the expected prefixed name is absent?
+**Question:** Does listing these tools retrieve coordinates or a route? What should happen if neither expected naming form is present?
 
 <details>
 <summary>Show answer: discovery before invocation</summary>
@@ -426,7 +481,7 @@ flowchart LR
     classDef input fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
     classDef process fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
     classDef output fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
-    query["Berlin Hauptbahnhof query"]:::input --> tool["osm_geocode via adapter"]:::process
+    query["Berlin Hauptbahnhof query"]:::input --> tool["geocode via adapter"]:::process
     tool --> backend["Geocoding backend"]:::process
     backend --> result["Matches and coordinates or error"]:::output
 ```
@@ -438,7 +493,7 @@ from trip_mcp_config import OSM_CONFIG
 
 async with MCPAdapter(OSM_CONFIG) as adapter:
     tools = {item.name: item for item in await adapter.list_tools()}
-    result = await tools["osm_geocode"].ainvoke({
+    result = await get_single_server_tool(tools, "osm", "geocode").ainvoke({
         "query": "Berlin Hauptbahnhof, Berlin, Germany",
         "limit": 1,
     })
@@ -466,7 +521,7 @@ flowchart LR
     classDef input fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
     classDef process fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
     classDef output fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
-    filters["Alexanderplatz, museum, radius"]:::input --> tool["osm_find_nearby_pois"]:::process
+    filters["Alexanderplatz, museum, radius"]:::input --> tool["find_nearby_pois"]:::process
     tool --> backend["Mapped place search"]:::process
     backend --> result["Up to five mapped POIs or error"]:::output
 ```
@@ -478,7 +533,7 @@ from trip_mcp_config import OSM_CONFIG
 
 async with MCPAdapter(OSM_CONFIG) as adapter:
     tools = {item.name: item for item in await adapter.list_tools()}
-    result = await tools["osm_find_nearby_pois"].ainvoke({
+    result = await get_single_server_tool(tools, "osm", "find_nearby_pois").ainvoke({
         "near": "Alexanderplatz, Berlin, Germany",
         "category": "museum",
         "radius_m": 1200,
@@ -508,7 +563,7 @@ flowchart LR
     classDef input fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
     classDef process fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
     classDef output fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
-    points["Alexanderplatz to Brandenburg Gate"]:::input --> tool["osm_route with foot profile"]:::process
+    points["Alexanderplatz to Brandenburg Gate"]:::input --> tool["route with foot profile"]:::process
     tool --> backend["Routing backend"]:::process
     backend --> result["Route data or error"]:::output
 ```
@@ -520,7 +575,7 @@ from trip_mcp_config import OSM_CONFIG
 
 async with MCPAdapter(OSM_CONFIG) as adapter:
     tools = {item.name: item for item in await adapter.list_tools()}
-    result = await tools["osm_route"].ainvoke({
+    result = await get_single_server_tool(tools, "osm", "route").ainvoke({
         "waypoints": [
             "Alexanderplatz, Berlin, Germany",
             "Brandenburg Gate, Berlin, Germany",
@@ -573,8 +628,18 @@ async with MCPAdapter(TRIP_CONFIG) as adapter:
     for tool in sorted(all_tools, key=lambda item: item.name):
         print(" ", tool.name)
 
-    counts = Counter(tool.name.split("_", 1)[0] for tool in all_tools)
+    server_names = tuple(TRIP_CONFIG["mcpServers"])
+    counts = Counter()
+    for tool in all_tools:
+        origins = [name for name in server_names
+                   if tool.name.startswith(f"{name}_")]
+        counts[origins[0] if len(origins) == 1 else "unresolved"] += 1
     print("\nTool counts by server:", dict(counts))
+    if counts["unresolved"]:
+        raise RuntimeError(
+            "Combined tool origins are not uniquely namespaced. "
+            "Inspect the discovered catalog before continuing to Part B."
+        )
 ```
 
 **Observe:** One host application can communicate with multiple independent servers. Prefixing tool names helps avoid collisions if different servers advertise identically named operations. An MCP adapter does not need to contain the underlying server implementation.
@@ -701,7 +766,7 @@ Record short answers in a final Markdown cell in Colab.
 
 **Part A takeaway:** The MCP server owns its tool definitions and implementation. The client discovers them. LangChain converts the discovered capabilities into a familiar tool interface, but no language model has yet selected a tool.
 
-**Continue with:** [Activity 2, Part B: Groq-hosted Qwen, evaluation, native MCP comparison, and local-Qwen homework](./Activity_2_Part_B_Steps_4-6_and_hw.md).
+**Continue with:** [Activity 2, Part B: Groq-hosted Qwen, evaluation, native MCP comparison, and local-Qwen homework](./activity2b_fixed.md).
 
 
 ## Optional extension: SQLite questions and worked example
@@ -809,6 +874,9 @@ The in-memory database disappears when its connection closes. A filename such as
 
 
 ## References
+
+- [Python MCP SDK: notebook subprocess `fileno` issue](https://github.com/modelcontextprotocol/python-sdk/issues/1103)
+- [FastMCP: single and multiple-server transports](https://gofastmcp.com/clients/transports)
 
 - [LangChain: MCP overview and `MCPAdapter`](https://docs.langchain.com/oss/python/langchain/mcp)
 - [LangChain: MCP connections](https://docs.langchain.com/oss/python/langchain/mcp/connections)

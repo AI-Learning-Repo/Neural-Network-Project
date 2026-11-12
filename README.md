@@ -3,7 +3,6 @@
 
 ### Morning:
 
-- **Presentation by Group 6**
 - Model Context Protocol (MCP)
   - [Architecture overview](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture)
   - [Understanding MCP servers](https://modelcontextprotocol.io/docs/2026-07-28/learn/server-concepts)
@@ -18,13 +17,7 @@
   - [Phase 4: Trip MCP Server with LangChain, Without an LLM](./material/phase4_trip_server_langchain.md)
   - [Phase 5: Trip MCP Server with LangChain and  LLM](./material/phase5_trip_server_llm.md)
   - [Phase 6: MCP skills and security](./material/phase6_skills.md): The idea to explore **agent skills and their security implications** was suggested by **Yongzhi (Group 5)**
-  - [Optional task: ](./material/phase7_optional.md)
-
----
-
-> [!NOTE]  
-> - Week 5 (Sprint 2): Room: MMC223, Thursday, 19.11.2026 09.00 - 16.30
-> - Code marathon 2: Gr 2, Gr 11
+  - [Optional task: Migrate Legacy MCP Servers to Official SDK v2](./material/phase7_optional.md)
 
 
 ----
@@ -33,9 +26,10 @@
 
 - [Code marathon 2](./material/Code-marathon-2.md)
 - Project resources:
+  - Next Week (19.11.2026): **Room MMC223**,  09.00 - 16.30
   - [Sprint 2 Deliverables & Submission Requirements](./material/sprint2_deliverables.md)
   - [Sprint 1 Template](./material/sprint2_ppt_template.md)  
-  - Streamlit Refresher, Testing
+  - Refresher: [Streamlit*](./material/streamlit.md), Unit Testing
 
 ---
 

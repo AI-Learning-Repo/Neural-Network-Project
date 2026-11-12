@@ -3,6 +3,11 @@
 
 > The idea to explore **agent skills and their security implications** was suggested by **Yongzhi (Group 5)**
 
+**MCP Security Fundamentals Course** 
+
+<a href="https://www.youtube.com/watch?v=gYXLRMycVMk"><img src="./img/security.png" width="50%"></a>
+
+
 In phases 1-5, you used a server you wrote yourself. Now imagine that your trip-planning assistant connects to an **external map or travel MCP server**. Consider how the trust boundary changes. Answer each question before expanding the suggested answer.
 
 ### Question 1. Can an MCP server provide agent skills as resources? What does the Skills Extension add?

@@ -27,9 +27,9 @@
 - [Code marathon 2](./material/Code-marathon-2.md)
 - Project resources:
   - Next Week (19.11.2026): **Room MMC223**,  09.00 - 16.30
+  - [Sprint 2 Template](./material/sprint2_ppt_template.md)    
   - [Sprint 2 Deliverables & Submission Requirements](./material/sprint2_deliverables.md)
-  - [Sprint 1 Template](./material/sprint2_ppt_template.md)  
-  - Refresher: [Streamlit*](./material/streamlit.md), Unit Testing
+  - Refresher: [Streamlit](./material/streamlit.md), Unit Testing
 
 ---
 

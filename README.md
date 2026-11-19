@@ -1,14 +1,11 @@
-# Schedule — Week 5 
+# Schedule
 
-**Thursday, 19.11.2026 | 09:00–16:30 | Room: MMC223**
+<!-- **Thursday, 19.11.2026 | 09:00–16:30 | Room: MMC223** -->
 
 
 ---
 
 ## Morning: From Embeddings to Agentic RAG with Deep Agents
-
-> [!NOTE]
-> **Groq vs. Gemini vs. Local Qwen:** Activities 1 and 2 are provided in both **Groq** and **Gemini** versions. They cover the **exact same RAG pipeline, dataset, and exercises**, differing only in the LLM provider (`ChatGroq` vs. `ChatGoogleGenerativeAI`). You are also encouraged to try both activities with **Qwen 3.5 (`2B` or `4B`) in Google Colab** by running Ollama on a free **T4 GPU** runtime. More info [here](./material/activity-1-2-local-qwen.ipynb)
 
 
 - [Summary](./material/theory.md)
@@ -22,23 +19,9 @@
   - [Convert Markdown to DOCX and PDF](./material/markdown_to_docx_and_pdf.ipynb)
   - [Gemini vs Groq](./material/gemini.md) <!-- verify filename -->
 
----
+> [!NOTE]
+> **Groq vs. Gemini vs. Local Qwen:** Activities 1 and 2 are provided in both **Groq** and **Gemini** versions. They cover the **exact same RAG pipeline, dataset, and exercises**, differing only in the LLM provider (`ChatGroq` vs. `ChatGoogleGenerativeAI`). You are also encouraged to try both activities with **Qwen 3.5 (`2B` or `4B`) in Google Colab** by running Ollama on a free **T4 GPU** runtime. More info [here](./material/activity-1-2-local-qwen.ipynb)
 
-<details>
-<summary>Links used in Session</summary>
-
-- https://docs.langchain.com/oss/python/integrations/chat/google_generative_ai
-- https://docs.langchain.com/oss/javascript/langchain/overview
-- https://docs.langchain.com/oss/python/deepagents/rag
-- https://github.com/langchain-ai/docs/blob/main/src/oss/deepagents/rag.mdx
-- https://docs.langchain.com/oss/python/deepagents/skills
-- https://docs.langchain.com/oss/python/integrations/document_loaders
-- https://github.com/polzerdo55862/RAG-with-Python-Cookbook
-- https://docs.langchain.com/oss/python/deepagents/customization
-
-<!-- - https://www.tavily.com/ -->
-
-</details>
 
 ----
 
@@ -78,6 +61,24 @@
   - [What are Deep Agents? (LangChain)](https://www.youtube.com/watch?v=IVts6ztrkFg)
   - [Complete Deep Agents Course With Langchain In 3 Hours](https://www.youtube.com/watch?v=J8DzuMmSDEU)
 
+
+---
+
+<details>
+<summary>Links used in Session</summary>
+
+- https://docs.langchain.com/oss/python/integrations/chat/google_generative_ai
+- https://docs.langchain.com/oss/javascript/langchain/overview
+- https://docs.langchain.com/oss/python/deepagents/rag
+- https://github.com/langchain-ai/docs/blob/main/src/oss/deepagents/rag.mdx
+- https://docs.langchain.com/oss/python/deepagents/skills
+- https://docs.langchain.com/oss/python/integrations/document_loaders
+- https://github.com/polzerdo55862/RAG-with-Python-Cookbook
+- https://docs.langchain.com/oss/python/deepagents/customization
+
+<!-- - https://www.tavily.com/ -->
+
+</details>
 
 <!-- 
 - [Outline](./material/toc.md) 

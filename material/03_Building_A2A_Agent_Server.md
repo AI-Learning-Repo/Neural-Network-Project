@@ -47,7 +47,7 @@ The Burger and Pizza agents are not started until phase 5. This keeps the first 
 
 ### Cell 01 — Clone the repository
 
-Use the current repository, including `lab_utils.py` and `clients/a2a_client.py`. Cloning does not start a service or call a model. A previously cloned directory is reused; use a fresh runtime if it is outdated.
+Use the current repository, including `lab_utils.py` and `clients/a2a_client.py`. 
 
 ```python
 from pathlib import Path

@@ -79,14 +79,36 @@ Listing models checks the provider connection without generating a completion. T
 
 ```python
 # Cell 05 — Check model availability
-if PROVIDER=='gemini':
+if PROVIDER == 'gemini':
     from google import genai
-    models=[m.name.removeprefix('models/') for m in genai.Client(api_key=os.environ[key_name]).models.list() if 'generateContent' in (m.supported_actions or [])]
+
+    with genai.Client(
+        api_key=os.environ[key_name],
+        vertexai=False
+    ) as client:
+
+        models = [
+            m.name.removeprefix('models/')
+            for m in client.models.list()
+            if 'generateContent' in (m.supported_actions or [])
+        ]
+
 else:
     from groq import Groq
-    models=[m.id for m in Groq(api_key=os.environ[key_name]).models.list().data]
+
+    with Groq(api_key=os.environ[key_name]) as client:
+        models = [
+            m.id
+            for m in client.models.list().data
+        ]
+
 print('\n'.join(sorted(models)))
+
 assert MODEL in models, 'Choose a model available to this account.'
+
+print(f'\nSelected model: {MODEL}')
+print(f'Provider: {PROVIDER}')
+print('Model availability check passed.')
 ```
 
 > *'Note'*: Cells 06 and 07 set up isolated Python environments and download dependencies. This process usually takes 2–3 minutes. Please do not stop or interrupt the cell while it runs.
@@ -215,6 +237,104 @@ async def exchange(url, request):
 chunks=await asyncio.wait_for(exchange(lab.AGENTS['burger']['url'],request),timeout=180)
 for chunk in chunks: display(JSON(MessageToDict(chunk),expanded=True))
 ```
+
+
+<details>
+<summary><strong>Troubleshooting — Rate limits, timeouts and switching model providers</strong></summary>
+
+If Cell 14 fails with an `A2AClientTimeoutError`, `ReadTimeout`, HTTP 429 error or provider quota error, the underlying LLM provider may be experiencing rate limits, high demand or slow inference.
+
+A timeout alone does not necessarily indicate a rate-limit error. Inspect the seller's logs to identify the possible cause:
+
+```python
+lab.show_log('burger', lines=50)
+```
+
+One advantage of the A2A architecture is that the underlying model and model provider can be changed without modifying the A2A client implementation.
+
+The `lab.switch_provider()` utility stops the existing seller processes, updates their provider and model configuration, restarts the services and waits for their Agent Cards to become available.
+
+There is no need to restart the Colab runtime, reinstall dependencies or recreate the virtual environments.
+
+Use the following code to experiment with different provider and model combinations. Uncomment the desired combination and comment out the others.
+
+Make sure that the API key corresponding to the selected provider is available in Colab Secrets.
+
+```python
+# Recovery — Switch provider or model
+
+from google.colab import userdata
+
+# Option 1 — Groq with GPT-OSS
+# PROVIDER = 'groq'
+# MODEL = 'openai/gpt-oss-120b'
+
+# Option 2 — Groq with Qwen
+# PROVIDER = 'groq'
+# MODEL = 'qwen/qwen3.8-27b'
+
+# Option 3 — Gemini Flash
+# PROVIDER = 'gemini'
+# MODEL = 'gemini-3.5-flash'
+
+# Option 4 — Gemini Flash Lite
+PROVIDER = 'gemini'
+MODEL = 'gemini-3.5-flash-lite'
+
+# Configure the selected provider's credentials
+key_name = (
+    'GEMINI_API_KEY'
+    if PROVIDER == 'gemini'
+    else 'GROQ_API_KEY'
+)
+
+os.environ[key_name] = userdata.get(key_name)
+
+if PROVIDER == 'gemini':
+    os.environ['GOOGLE_API_KEY'] = os.environ[key_name]
+    os.environ['GOOGLE_GENAI_USE_VERTEXAI'] = 'false'
+
+# Restart the seller services
+cards = lab.switch_provider(PROVIDER, MODEL)
+
+lab.show_processes()
+
+print('Active provider:', PROVIDER)
+print('Active model:', MODEL)
+```
+
+**After switching the provider or model:**
+
+1. Verify that both seller processes are running.
+2. Rerun Cell 13 to construct a new A2A message with a fresh message identifier.
+3. Rerun Cell 14 to send the request.
+4. Rerun Cell 15 to inspect the returned task and artifact.
+
+Model availability and rate limits depend on the provider, account and selected model. Switching to another model within the same provider may help when quotas are model-specific. Switching to another provider may help when the provider-level quota has been exhausted.
+
+Note that restarting the seller services resets their in-memory task and conversation state.
+
+### Connection to A2A interoperability
+
+This recovery procedure also illustrates an important architectural property of A2A: **model-provider independence**.
+
+The following components remain unchanged when switching the underlying model:
+
+- The A2A client implementation.
+- The message structure.
+- The communication protocol.
+- The seller service endpoints.
+- The advertised business capabilities, assuming the same service implementation.
+- The mechanism for retrieving tasks and artifacts.
+
+Only the underlying model configuration and the running seller processes change.
+
+From the client's perspective, the remote agent remains an independently accessible A2A service. The client does not need to know which LLM generates the remote agent's response.
+
+This separation between the communication protocol and the internal implementation is one of the fundamental benefits of A2A interoperability.
+
+</details>
+
 
 ## Cell 15 — Interpret the completed task
 

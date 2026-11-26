@@ -32,7 +32,7 @@
 
 ---
 
-<details opens>
+<details open>
 <summary>Links used in Session</summary>
 
 - https://a2a-protocol.org/latest/

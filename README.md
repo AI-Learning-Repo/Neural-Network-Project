@@ -14,12 +14,19 @@
   - [Activity 3: Building an A2A Agent Server](./material/03_Building_A2A_Agent_Server.md)
   - [Lab utilities reference](./material/lab_utils_reference.md)
 
+
+----
+
+> [!NOTE]  
+> - Week 7: Monday 30.11.2026: Neural Network Course, Room MMA226, 09.00 - 16.00
+> - Week 8: Monday 07.12.2026: Neural Network **Project** Course, Room MMC223, 09.00 - 16.00
+
 ----
 
 ### Afternoon:
 
 
-- Next Week (Monday 30.11.2026): **Room MMA226**,  09.00 - 16.00
+
 - [Activity 4: Plan an International Trip](./material/04-Plan-International-Trip.md)
 - Project resources:
   - [Sprint 3 Template](./material/sprint3_ppt_template.md)    
@@ -30,6 +37,7 @@
 <details>
 <summary>Links used in Session</summary>
 
+- https://a2a-protocol.org/latest/
 - Design Pattern Agentic AI systems
   - https://docs.cloud.google.com/architecture/choose-design-pattern-agentic-ai-system
   - https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns

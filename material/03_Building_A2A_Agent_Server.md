@@ -266,6 +266,14 @@ if __name__ == '__main__':
 Compilation catches syntax errors; imports catch missing dependencies or incorrect SDK symbols. Neither check is a network protocol test.
 
 ```python
+lab.run_command([
+    'uv', 'pip', 'install',
+    '--python', DESSERT_PYTHON,
+    'sse-starlette'
+])
+```
+
+```python
 lab.run_command([DESSERT_PYTHON,'-m','py_compile','agent.py','agent_executor.py','__main__.py'],cwd=WORK)
 lab.run_command([DESSERT_PYTHON,'-c','from agent_executor import DessertAgentExecutor; from a2a.server.routes import create_agent_card_routes, create_jsonrpc_routes; print("Imports OK")'],cwd=WORK)
 ```

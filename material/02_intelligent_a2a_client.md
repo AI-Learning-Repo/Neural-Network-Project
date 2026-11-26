@@ -79,14 +79,37 @@ Listing models checks the provider connection without generating a completion. T
 
 ```python
 # Cell 05 — Check model availability
-if PROVIDER=='gemini':
+
+if PROVIDER == 'gemini':
     from google import genai
-    models=[m.name.removeprefix('models/') for m in genai.Client(api_key=os.environ[key_name]).models.list() if 'generateContent' in (m.supported_actions or [])]
+
+    with genai.Client(
+        api_key=os.environ[key_name],
+        vertexai=False
+    ) as client:
+
+        models = [
+            m.name.removeprefix('models/')
+            for m in client.models.list()
+            if 'generateContent' in (m.supported_actions or [])
+        ]
+
 else:
     from groq import Groq
-    models=[m.id for m in Groq(api_key=os.environ[key_name]).models.list().data]
+
+    with Groq(api_key=os.environ[key_name]) as client:
+        models = [
+            m.id
+            for m in client.models.list().data
+        ]
+
 print('\n'.join(sorted(models)))
+
 assert MODEL in models, 'Choose a model available to this account.'
+
+print(f'\nSelected model: {MODEL}')
+print(f'Provider: {PROVIDER}')
+print('Model availability check passed.')
 ```
 
 ## Cell 06 — Create isolated seller environments

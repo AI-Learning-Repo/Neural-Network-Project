@@ -35,7 +35,7 @@
 <details open>
 <summary>Links used in Session</summary>
 
-- https://a2a-protocol.org/latest/
+- https://a2a-protocol.org
 - Design Pattern Agentic AI systems
   - https://docs.cloud.google.com/architecture/choose-design-pattern-agentic-ai-system
   - https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns

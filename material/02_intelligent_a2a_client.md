@@ -267,6 +267,26 @@ except Exception as exc:
     print('Graph rendering unavailable:',type(exc).__name__)
 ```
 
+```mermaid
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	model(model)
+	tools(tools<hr/><small><em>__tools = ls, read_file, write_file, edit_file, delete, glob, grep, execute, task, discover_agents, ask_seller</em></small>)
+	_ParentNotifierMiddleware\2eafter_agent(_ParentNotifierMiddleware.after_agent)
+	PatchToolCallsMiddleware\2ebefore_agent(PatchToolCallsMiddleware.before_agent)
+	__end__([<p>__end__</p>]):::last
+	PatchToolCallsMiddleware\2ebefore_agent --> model;
+	__start__ --> PatchToolCallsMiddleware\2ebefore_agent;
+	model -.-> _ParentNotifierMiddleware\2eafter_agent;
+	model -.-> tools;
+	tools -.-> model;
+	_ParentNotifierMiddleware\2eafter_agent --> __end__;
+	model -.-> model;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+```
+
 ## Cell 16 — Run a budget comparison
 
 The request requires information from both sellers. The model should discover capabilities, ask relevant questions, compare costs and recommend a meal within €25. Example: two classic cheeseburgers cost €17; two Margherita pizzas cost €20. Other valid options are possible. Observe actual tool use rather than expecting identical prose.

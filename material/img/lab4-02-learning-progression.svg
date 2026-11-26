@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 446" role="img"><title>Learning progression</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker></defs><rect width="800" height="446" rx="16" fill="#ffffff"/><text x="400.0" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#172554" font-family="Arial,sans-serif">Learning progression</text>
+<path d="M400 134 V154" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M400 228 V248" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M400 322 V342" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="90" y="60" width="620" height="74" rx="10" fill="#087f75" fill-opacity=".075" stroke="#087f75" stroke-width="1.5"/>
+<text x="400.0" y="91.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#087f75">Stage 1 — Understanding A2A</text>
+<text x="400.0" y="113.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Reuse discovery, communication and task processing</text>
+<rect x="90" y="154" width="620" height="74" rx="10" fill="#2563eb" fill-opacity=".075" stroke="#2563eb" stroke-width="1.5"/>
+<text x="400.0" y="185.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#2563eb">Stage 2 — Intelligent A2A Client</text>
+<text x="400.0" y="207.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Reuse Deep Agents and orchestration</text>
+<rect x="90" y="248" width="620" height="74" rx="10" fill="#b45309" fill-opacity=".075" stroke="#b45309" stroke-width="1.5"/>
+<text x="400.0" y="279.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#b45309">Stage 3 — Building an A2A Server</text>
+<text x="400.0" y="301.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Reuse executors and business logic</text>
+<rect x="90" y="342" width="620" height="74" rx="10" fill="#7c3aed" fill-opacity=".075" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="400.0" y="373.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#7c3aed">Stage 4 — International Travel Concierge</text>
+<text x="400.0" y="395.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Combine all three foundations</text>
+</svg>

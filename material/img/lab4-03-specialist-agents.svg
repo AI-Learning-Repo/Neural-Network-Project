@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" role="img"><title>Specialist services and responsibilities</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker></defs><rect width="800" height="310" rx="16" fill="#ffffff"/><text x="400.0" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#172554" font-family="Arial,sans-serif">Specialist services and responsibilities</text>
+<rect x="20" y="60" width="370" height="105" rx="10" fill="#2563eb" fill-opacity=".075" stroke="#2563eb" stroke-width="1.5"/>
+<text x="205.0" y="84.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#2563eb">Flight Booking Agent</text>
+<text x="205.0" y="106.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Port 12001</text>
+<text x="205.0" y="128.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Flights and fares</text>
+<text x="205.0" y="150.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Implement or adapt</text>
+<rect x="410" y="60" width="370" height="105" rx="10" fill="#b45309" fill-opacity=".075" stroke="#b45309" stroke-width="1.5"/>
+<text x="595.0" y="84.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#b45309">Hotel Reservation Agent</text>
+<text x="595.0" y="106.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Port 12002</text>
+<text x="595.0" y="128.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Accommodation</text>
+<text x="595.0" y="150.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Implement or adapt</text>
+<rect x="20" y="180" width="370" height="105" rx="10" fill="#7c3aed" fill-opacity=".075" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="205.0" y="204.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#7c3aed">Currency Conversion Agent</text>
+<text x="205.0" y="226.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Port 12003</text>
+<text x="205.0" y="248.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Exchange rates</text>
+<text x="205.0" y="270.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Implement or adapt</text>
+<rect x="410" y="180" width="370" height="105" rx="10" fill="#087f75" fill-opacity=".075" stroke="#087f75" stroke-width="1.5"/>
+<text x="595.0" y="204.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#087f75">Local Tours Agent</text>
+<text x="595.0" y="226.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Port 12004</text>
+<text x="595.0" y="248.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Activities and attractions</text>
+<text x="595.0" y="270.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Implement or adapt</text>
+</svg>

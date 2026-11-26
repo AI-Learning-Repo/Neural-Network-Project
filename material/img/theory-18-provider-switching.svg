@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 380" role="img" aria-labelledby="title desc">
+<title id="title">Provider switching</title><desc id="desc">Provider switching</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#64748b"/></marker></defs>
+<rect width="920" height="380" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="460.0" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f172a">Provider switching</text>
+<path d="M460.0 120 L460.0 155" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M460.0 220 L225.0 275" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="342.5" y="241.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">select</text>
+<path d="M460.0 220 L695.0 275" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="577.5" y="241.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">select</text>
+<rect x="310" y="55" width="300" height="65" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="460.0" y="82.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">A2A client</text>
+<text x="460.0" y="103.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Endpoint unchanged</text>
+<rect x="310" y="155" width="300" height="65" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="460.0" y="182.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">Dessert process</text>
+<text x="460.0" y="203.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Restart with selected environment</text>
+<rect x="70" y="275" width="310" height="65" rx="10" fill="white" stroke="#7c3aed" stroke-width="2"/>
+<text x="225.0" y="302.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#7c3aed">Gemini</text>
+<text x="225.0" y="323.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">ChatGoogleGenerativeAI</text>
+<rect x="540" y="275" width="310" height="65" rx="10" fill="white" stroke="#b45309" stroke-width="2"/>
+<text x="695.0" y="302.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#b45309">Groq</text>
+<text x="695.0" y="323.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">ChatGroq</text>
+</svg>

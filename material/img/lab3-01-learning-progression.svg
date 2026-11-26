@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 423" role="img" aria-labelledby="title desc">
+<title id="title">Four-stage learning progression</title><desc id="desc">Four-stage learning progression</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#64748b"/></marker></defs>
+<rect width="920" height="423" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="460.0" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f172a">Four-stage learning progression</text>
+<path d="M460.0 112 L460.0 136" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M460.0 194 L460.0 218" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M460.0 276 L460.0 300" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="190" y="54" width="540" height="58" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="460.0" y="78.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">Stage 1: Understanding A2A</text>
+<text x="460.0" y="99.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Consume a remote service</text>
+<rect x="190" y="136" width="540" height="58" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="460.0" y="160.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">Stage 2: Intelligent client</text>
+<text x="460.0" y="181.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Discover, choose and coordinate</text>
+<rect x="190" y="218" width="540" height="58" rx="10" fill="white" stroke="#b45309" stroke-width="2"/>
+<text x="460.0" y="242.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#b45309">Stage 3: Implement a server</text>
+<text x="460.0" y="263.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Expose application capabilities</text>
+<rect x="190" y="300" width="540" height="58" rx="10" fill="white" stroke="#7c3aed" stroke-width="2"/>
+<text x="460.0" y="324.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#7c3aed">Stage 4: International travel</text>
+<text x="460.0" y="345.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Combine client and server skills</text>
+</svg>

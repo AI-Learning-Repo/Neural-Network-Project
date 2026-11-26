@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 400" role="img" aria-labelledby="title desc">
+<title id="title">Three-agent purchasing system</title><desc id="desc">Each service runs in its own Python process and environment.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#64748b"/></marker></defs>
+<rect width="920" height="400" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="460.0" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f172a">Three-agent purchasing system</text>
+<path d="M460.0 125 L460.0 165" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M285 192.5 L285 317.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M460.0 220 L460.0 280" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M635 192.5 L635 317.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="285" y="55" width="350" height="70" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="460.0" y="85.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">Deep Agents concierge</text>
+<text x="460.0" y="106.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Discovery, selection, aggregation</text>
+<rect x="285" y="165" width="350" height="55" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="460.0" y="187.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">A2A tools</text>
+<text x="460.0" y="208.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Known endpoint registry</text>
+<rect x="25" y="280" width="260" height="75" rx="10" fill="white" stroke="#b45309" stroke-width="2"/>
+<text x="155.0" y="312.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#b45309">Burger</text>
+<text x="155.0" y="333.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">CrewAI · port 11001</text>
+<rect x="330" y="280" width="260" height="75" rx="10" fill="white" stroke="#7c3aed" stroke-width="2"/>
+<text x="460.0" y="312.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#7c3aed">Pizza</text>
+<text x="460.0" y="333.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">LangGraph · port 11000</text>
+<rect x="635" y="280" width="260" height="75" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="765.0" y="312.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">Dessert</text>
+<text x="765.0" y="333.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">LangChain · port 11002</text>
+<text x="460.0" y="387" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#475569">Each service runs in its own Python process and environment.</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img"><title>Implementation roadmap</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker></defs><rect width="800" height="600" rx="16" fill="#ffffff"/><text x="400.0" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#172554" font-family="Arial,sans-serif">Implementation roadmap</text>
+<rect x="30" y="55" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="78.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Define travel datasets, supported destinations, dates and pricing units</text>
+<rect x="30" y="99" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="122.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Define Agent Cards, skills, endpoints and service interfaces</text>
+<rect x="30" y="143" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="166.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Implement or adapt the Flight Booking Agent</text>
+<rect x="30" y="187" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="210.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Implement or adapt the Hotel Reservation Agent</text>
+<rect x="30" y="231" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="254.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Implement the deterministic Currency Conversion Agent</text>
+<rect x="30" y="275" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="298.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Implement the Local Tours Agent</text>
+<rect x="30" y="319" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="342.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Validate all four A2A servers independently</text>
+<rect x="30" y="363" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="386.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Implement and validate the Deep Agents Travel Concierge</text>
+<rect x="30" y="407" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="430.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Verify currency conversion, budget calculations and alternative selection</text>
+<rect x="30" y="451" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="474.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Run the standard trip and other core evaluation scenarios</text>
+<rect x="30" y="495" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="518.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Record execution traces, results and reproducible setup instructions</text>
+<rect x="30" y="539" width="740" height="36" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="400.0" y="562.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">○ Review the implementation against the acceptance criteria</text>
+</svg>

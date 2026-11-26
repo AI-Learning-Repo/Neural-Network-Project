@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 365" role="img" aria-labelledby="title desc">
+<title id="title">Source files and responsibilities</title><desc id="desc">Source files and responsibilities</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#64748b"/></marker></defs>
+<rect width="920" height="365" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="460.0" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f172a">Source files and responsibilities</text>
+<path d="M285 142.5 L330 142.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="307.5" y="136.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">handler</text>
+<path d="M590 142.5 L635 142.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="612.5" y="136.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">invoke</text>
+<path d="M765.0 185 L765.0 245" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="765.0" y="209.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">phase 2+</text>
+<rect x="25" y="100" width="260" height="85" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="155.0" y="137.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">__main__.py</text>
+<text x="155.0" y="158.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Card, routes, Uvicorn</text>
+<rect x="330" y="100" width="260" height="85" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="460.0" y="137.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">agent_executor.py</text>
+<text x="460.0" y="158.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">A2A lifecycle adapter</text>
+<rect x="635" y="100" width="260" height="85" rx="10" fill="white" stroke="#b45309" stroke-width="2"/>
+<text x="765.0" y="137.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#b45309">agent.py</text>
+<text x="765.0" y="158.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Domain application</text>
+<rect x="635" y="245" width="260" height="75" rx="10" fill="white" stroke="#7c3aed" stroke-width="2"/>
+<text x="765.0" y="277.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#7c3aed">business.py</text>
+<text x="765.0" y="298.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Rules and integer cents</text>
+</svg>

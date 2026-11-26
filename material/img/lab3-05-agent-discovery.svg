@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 345" role="img" aria-labelledby="title desc">
+<title id="title">Discover before sending</title><desc id="desc">Discovery itself does not invoke a model.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#64748b"/></marker></defs>
+<rect width="920" height="345" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="460.0" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f172a">Discover before sending</text>
+<path d="M335 102.5 L585 102.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="460.0" y="96.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">GET</text>
+<path d="M585 102.5 L335 267.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="460.0" y="179.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">interface + skills</text>
+<path d="M335 267.5 L585 267.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="460.0" y="261.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">SendMessage</text>
+<rect x="45" y="70" width="290" height="65" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="190.0" y="97.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">Client</text>
+<text x="190.0" y="118.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Known loopback URL</text>
+<rect x="585" y="70" width="290" height="65" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="730.0" y="97.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">Agent Card endpoint</text>
+<text x="730.0" y="118.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">GET /.well-known/agent-card.json</text>
+<rect x="45" y="235" width="290" height="65" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="190.0" y="262.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">Client SDK</text>
+<text x="190.0" y="283.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Message + user role</text>
+<rect x="585" y="235" width="290" height="65" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="730.0" y="262.5" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">JSON-RPC endpoint</text>
+<text x="730.0" y="283.5" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155">Task and artifacts</text>
+<text x="460.0" y="332" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#475569">Discovery itself does not invoke a model.</text>
+</svg>

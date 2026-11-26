@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 385" role="img" aria-labelledby="title desc">
+<title id="title">Client and server intelligence are independent</title><desc id="desc">Client and server intelligence are independent</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#64748b"/></marker></defs>
+<rect width="920" height="385" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="460.0" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f172a">Client and server intelligence are independent</text>
+<path d="M232.5 106 L232.5 138" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="232.5" y="116.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">A2A</text>
+<path d="M687.5 106 L687.5 138" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="687.5" y="116.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">A2A</text>
+<path d="M232.5 261 L232.5 293" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="232.5" y="271.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">A2A</text>
+<path d="M687.5 261 L687.5 293" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="687.5" y="271.0" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" fill="#334155" paint-order="stroke" stroke="#f8fafc" stroke-width="5">A2A</text>
+<rect x="35" y="58" width="395" height="48" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="232.5" y="87.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">A · Direct Python client</text>
+<rect x="35" y="138" width="395" height="48" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="232.5" y="167.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">Deterministic server</text>
+<rect x="490" y="58" width="395" height="48" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="687.5" y="87.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">B · Direct Python client</text>
+<rect x="490" y="138" width="395" height="48" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="687.5" y="167.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">LLM-powered server</text>
+<rect x="35" y="213" width="395" height="48" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="232.5" y="242.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">C · Deep Agents client</text>
+<rect x="35" y="293" width="395" height="48" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="232.5" y="322.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">Deterministic server</text>
+<rect x="490" y="213" width="395" height="48" rx="10" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="687.5" y="242.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#2563eb">D · Deep Agents client</text>
+<rect x="490" y="293" width="395" height="48" rx="10" fill="white" stroke="#0f766e" stroke-width="2"/>
+<text x="687.5" y="322.0" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#0f766e">LLM-powered server</text>
+</svg>

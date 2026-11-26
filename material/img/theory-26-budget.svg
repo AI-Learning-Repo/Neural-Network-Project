@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 355" role="img"><title>London — Four-day trip</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker></defs><rect width="800" height="355" rx="16" fill="#ffffff"/><text x="400.0" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#172554" font-family="Arial,sans-serif">London — Four-day trip</text>
+<rect x="20" y="60" width="245" height="95" rx="10" fill="#2563eb" fill-opacity=".075" stroke="#2563eb" stroke-width="1.5"/>
+<text x="142.5" y="90.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#2563eb">Return flights</text>
+<text x="142.5" y="112.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Two passengers</text>
+<text x="142.5" y="134.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">€440</text>
+<rect x="277" y="60" width="245" height="95" rx="10" fill="#b45309" fill-opacity=".075" stroke="#b45309" stroke-width="1.5"/>
+<text x="399.5" y="90.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#b45309">Accommodation</text>
+<text x="399.5" y="112.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Three nights</text>
+<text x="399.5" y="134.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">€480</text>
+<rect x="534" y="60" width="245" height="95" rx="10" fill="#087f75" fill-opacity=".075" stroke="#087f75" stroke-width="1.5"/>
+<text x="656.5" y="90.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#087f75">Local activities</text>
+<text x="656.5" y="112.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">Two experiences</text>
+<text x="656.5" y="134.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">€180</text>
+<rect x="20" y="175" width="370" height="78" rx="10" fill="#475569" fill-opacity=".075" stroke="#475569" stroke-width="1.5"/>
+<text x="205.0" y="208.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#475569">Total estimated cost</text>
+<text x="205.0" y="230.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">€1,100</text>
+<rect x="410" y="175" width="370" height="78" rx="10" fill="#087f75" fill-opacity=".075" stroke="#087f75" stroke-width="1.5"/>
+<text x="595.0" y="208.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#087f75">Remaining budget</text>
+<text x="595.0" y="230.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#334155">€400</text>
+<rect x="20" y="280" width="222.93333333333334" height="24" fill="#2563eb"/><rect x="242.93333333333334" y="280" width="243.2" height="24" fill="#b45309"/><rect x="486.1333333333333" y="280" width="91.2" height="24" fill="#087f75"/><rect x="577.3333333333334" y="280" width="202.66666666666666" height="24" fill="#475569"/><text x="400" y="335" text-anchor="middle" font-family="Arial" font-size="14" fill="#334155">€1,500 total budget · fictional values</text></svg>

@@ -20,7 +20,7 @@
 
 - Agent to Agent Protocol (A2A)
   - Activity 2: Building an Intelligent A2A Client: [Standard](./material/02_intelligent_a2a_client.md) | [With Code Explanation](./material/02_intelligent_a2a_client_explained.md)
-  - Activity 3: Building an A2A Agent Server: [Standard](./material/03_Building_A2A_Agent_Server.md) | [Standarard](./material/03_Building_A2A_Agent_Server_explained.md)
+  - Activity 3: Building an A2A Agent Server: [Standard](./material/03_Building_A2A_Agent_Server.md) | [With Code Explanation](./material/03_Building_A2A_Agent_Server_explained.md)
   - [Lab utilities reference](./material/lab_utils_reference.md)
 - [Plan an International Trip](./material/04-Plan-International-Trip.md)   
 - Project resources:

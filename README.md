@@ -5,8 +5,10 @@
 
 - From Agent Orchestration to Agent Interoperability
   - [Theory](./material/theory.md)
-  - [Activity 1: Understanding Agent2Agent (A2A)](./material/01_understanding_a2a.md)
+  - Activity 1: Understanding Agent2Agent (A2A)[Standard](./material/01_understanding_a2a.md) | [With Code Explanation](./material/01_understanding_a2a_explained.md)
 
+
+<!-- - Activity 2: Building an Intelligent A2A Client: [Standard](./material/02_intelligent_a2a_client.md) | [With Code Explanation](./material/02_intelligent_a2a_client_explained.md) -->
 
 ----
 

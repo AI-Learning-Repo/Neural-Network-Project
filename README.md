@@ -25,9 +25,7 @@
   - Activity 3: Building an A2A Agent Server: [Standard](./material/03_Building_A2A_Agent_Server.md) | [With Code Explanation](./material/03_Building_A2A_Agent_Server_explained.md)
   - [Lab utilities reference](./material/lab_utils_reference.md)
   - [Plan an International Trip](./material/04-Plan-International-Trip.md)   
-- Project resources:
-  - [Sprint 3 Template](./material/sprint3_ppt_template.md)    
-  - [Sprint 3 Deliverables & Submission Requirements](./material/sprint3_deliverables.md)
+- [Sprint 3 Deliverables & Submission Requirements](./material/sprint3_deliverables.md)
  
 ---
 
